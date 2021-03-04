@@ -26,10 +26,19 @@ public class Main implements Callable<Integer>
    }
 
    /**
-    * Méthode pour l'appel de la commande mainCmd avec picoCLI
+    * Méthode pour l'appel de la commande newCmd avec picoCLI
     */
    @CommandLine.Command(name = "new", description = "command new from mainCmd")
    public Integer newCmd() throws Exception
+   {
+      return 0;
+   }
+
+   /**
+    * Méthode pour l'appel de la commande buildCmd avec picoCLI
+    */
+   @CommandLine.Command(name = "build", description = "command new from mainCmd")
+   public Integer buildCmd() throws Exception
    {
       return 0;
    }
