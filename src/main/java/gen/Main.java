@@ -52,6 +52,15 @@ public class Main implements Callable<Integer>
       return 0;
    }
 
+   /**
+    * Méthode pour l'appel de la commande cleanCmd avec picoCLI
+    */
+   @CommandLine.Command(name = "clean", description = "command new from mainCmd")
+   public Integer cleanCmd() throws Exception
+   {
+      return 0;
+   }
+
    public static void main(String[] args)
    {
       int exitCode = new CommandLine(new Main()).execute(args);
