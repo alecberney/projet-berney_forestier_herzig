@@ -43,6 +43,15 @@ public class Main implements Callable<Integer>
       return 0;
    }
 
+   /**
+    * Méthode pour l'appel de la commande buildCmd avec picoCLI
+    */
+   @CommandLine.Command(name = "serve", description = "command new from mainCmd")
+   public Integer serveCmd() throws Exception
+   {
+      return 0;
+   }
+
    public static void main(String[] args)
    {
       int exitCode = new CommandLine(new Main()).execute(args);
