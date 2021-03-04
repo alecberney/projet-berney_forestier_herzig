@@ -9,7 +9,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <option name="project" value="org.example/projet-berney_forestier_herzig" />
+        <option name="project" value="gen/projet-berney_forestier_herzig" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/info/picocli/picocli-codegen/4.6.1/picocli-codegen-4.6.1.jar" />
           <entry name="$MAVEN_REPOSITORY$/info/picocli/picocli/4.6.1/picocli-4.6.1.jar" />
@@ -20,7 +20,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="projet-berney_forestier_herzig" options="-Aproject=org.example/projet-berney_forestier_herzig" />
+      <module name="projet-berney_forestier_herzig" options="-Aproject=gen/projet-berney_forestier_herzig" />
     </option>
   </component>
 </project>
