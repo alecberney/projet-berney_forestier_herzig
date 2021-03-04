@@ -1,9 +1,11 @@
+package gen;
+
 import picocli.CommandLine;
-import picocli.CommandLine.Option;
+
 import java.util.concurrent.Callable;
 
 /**
- * Class implémentant Main pour picoCLI
+ * Class implémentant gen.Main pour picoCLI
  * @author Herzig Melvyn
  */
 @CommandLine.Command(

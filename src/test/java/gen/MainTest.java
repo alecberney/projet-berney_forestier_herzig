@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Classe de test pour la classe Main
+ * Classe de test pour la classe gen.Main
  */
 public class MainTest
 {
