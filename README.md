@@ -1,7 +1,7 @@
 # projet-berney_forestier_herzig
 Ce projet est réalisé durant le cours génie logiciel de la HEIG-VD
 
-## Autheurs
+## Auteurs
   * Berney Alec
   * Forestier Quentin
   * Herzig Melvyn
@@ -26,7 +26,7 @@ Toujours après un retour à la ligne
  -----------------------------------------------------------------------------------
  Cours       : Génie logiciel (GEN)
  Fichier     : <NomDuFichier>.h
- Auteur(s)   : Forestier Quentin & Melvyn Herzig
+ Auteur(s)   : Berney Alec & Forestier Quentin & Melvyn Herzig
  Date        : JJ.MM.AAAA
  -----------------------------------------------------------------------------------
  */
