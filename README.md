@@ -1,15 +1,54 @@
 # projet-berney_forestier_herzig
-projet-berney_forestier_herzig created by GitHub Classroom
+Ce projet est réalisé durant le cours génie logiciel de la HEIG-VD
 
-# Project Context
-The managing part of the project is done on Github with a Kanban template.
-This project is realised during a course followed at HEIG-VD school.
-The main goal of this project is to learn git and collaboration project on Github. So it's truely a training project.
-The students who are working on this project are:
-	Berney Alec
-	Forestier Quentin
-	Herzig Melvyn
+## Autheurs
+  * Berney Alec
+  * Forestier Quentin
+  * Herzig Melvyn
 
-# Project Environement
-This project has as main language Java.
-The project will use Maven and Picocli.
+# Conventions de programmation
+
+## Langues
+  * Code -> En anglais
+  * Commentaires -> En Français
+
+## Accolades
+Toujours après un retour à la ligne
+```
+ if(...)
+ {
+      /* Du code */
+ }
+```
+## Entête de fichier
+```
+/*
+ -----------------------------------------------------------------------------------
+ Cours       : Génie logiciel (GEN)
+ Fichier     : <NomDuFichier>.h
+ Auteur(s)   : Forestier Quentin & Melvyn Herzig
+ Date        : JJ.MM.AAAA
+ -----------------------------------------------------------------------------------
+ */
+ ```
+ ## Commentaires
+ Les classes et les méthodes sont commentées au format Javadoc.
+
+### Classes 
+ ```
+/**
+ * Description de la classe
+ * @author auteur 1
+ * @date jj-mm-aaaa
+ */
+  ```
+ 
+ ### Méthodes
+  ```
+ /**
+ * Description de la méthode
+ * @param param1 Description du premier paramètre.
+ * @param param2 Description du second paramètre.
+ * @return Que retourne la méthode..
+ */
+  ```
