@@ -1,3 +1,12 @@
+/*
+ -----------------------------------------------------------------------------------
+ Cours       : Génie logiciel (GEN)
+ Fichier     : Main.h
+ Auteur(s)   : Forestier Quentin & Melvyn Herzig
+ Date        : 06.03.2021
+ -----------------------------------------------------------------------------------
+ */
+
 package gen;
 
 import org.junit.jupiter.api.Test;
@@ -14,7 +23,7 @@ public class MainTest
    @Test
    void runTest()
    {
-      //Dumb test to export folder structure
+      //Test sans but. Vérifie si la structure du projet fonctionne.
       assertEquals(1,1);
    }
 }

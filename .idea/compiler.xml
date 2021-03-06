@@ -5,7 +5,7 @@
       <profile default="true" name="Default" enabled="true">
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for projet-berney_forestier_herzig" enabled="true">
+      <profile name="Annotation profile for Gen Projet Berney Forestier Herzig" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
