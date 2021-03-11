@@ -63,7 +63,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>gen.StatiqueSite</mainClass>
+                                    <mainClass>gen.Statique</mainClass>
                                 </transformer>
                             </transformers>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
@@ -108,7 +108,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <finalName>statiqueSite</finalName>
+                            <finalName>statique</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                             <descriptors>
                                 <descriptor>src/assembly/assembly.xml</descriptor>

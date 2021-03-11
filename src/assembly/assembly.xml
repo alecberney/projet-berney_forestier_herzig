@@ -11,7 +11,7 @@
       <directory>src/bin</directory>
       <outputDirectory>bin</outputDirectory>
       <includes>
-        <include>statiqueSite</include>
+        <include>statique</include>
       </includes>
       <lineEnding>unix</lineEnding>
       <fileMode>0755</fileMode>

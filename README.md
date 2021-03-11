@@ -15,18 +15,18 @@ Construction et dézippage du projet.
 ```
 mvn clean install \
 && rm -fr statique \
-&& unzip target/statiqueSite.zip
+&& unzip target/statique.zip
 ```
  
 Ajout du répertoire bin au PATH
 ```
-export PATH=$PATH:`pwd`/statiqueSite/bin
+export PATH=$PATH:`pwd`/statique/bin
 ```
 
 Executé statique donne le résultat suivant
 ```
 statique
-Usage: statiqueSite [COMMAND]
+Usage: statique [COMMAND]
 A static site generator.
 Commands:
 	new    Initialize a static site directory
@@ -34,16 +34,20 @@ Commands:
 	build  Build a static site
 	serve  Serve a static site
 ```
-# Branches
-**Branches d'un sprint:** sprint-x (avec x = 1,2,3,4)  
-**Branches qui ajoutent une fonctionnalité:** ft-<featuredesc>
-**Branches qui résolvent un bug:** bg-<nameofbugsolved>
+# GitHub
+## Langues
+	* Branches -> En anglais  
+    * Reste -> En français  
+## Branches
+**Branches d'un sprint:** sprint-x (avec x = 1,2,3,4)    
+**Branches qui ajoutent une fonctionnalité:** ft\-feature\-desc  
+**Branches qui résolvent un bug:** bg\-name\-of\-bug\-solved  
 
 # Conventions de programmation
 
 ## Langues
   * Code -> En anglais
-  * Commentaires -> En Français
+  * Commentaires -> En français
 
 ## Accolades
 Toujours après un retour à la ligne

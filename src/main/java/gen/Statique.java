@@ -1,7 +1,7 @@
 /*
  -----------------------------------------------------------------------------------
  Cours       : Génie logiciel (GEN)
- Fichier     : Main
+ Fichier     : Statique
  Auteur(s)   : Forestier Quentin & Melvyn Herzig
  Date        : 06.03.2021
  -----------------------------------------------------------------------------------
@@ -13,21 +13,21 @@ import picocli.CommandLine;
 import java.util.concurrent.Callable;
 import gen.command.Build;
 import gen.command.Clean;
-import gen.command.New;
+import gen.command.Init;
 import gen.command.Serve;
 
 /**
- * Class implémentant la commande principale statiqueSite.
+ * Class implémentant la commande principale statique.
  * @author Herzig Melvyn
  */
 @CommandLine.Command(
-        name = "statiqueSite",
+        name = "statique",
         description = "A brand new static site generator.",
-        subcommands = {New.class, Clean.class, Build.class, Serve.class})
-public class StatiqueSite implements Callable<Integer>
+        subcommands = {Init.class, Clean.class, Build.class, Serve.class})
+public class Statique implements Callable<Integer>
 {
    /**
-    * Méthode pour l'appel de la commande statiqueSite
+    * Méthode pour l'appel de la commande statique
     */
    @Override
    public Integer call() throws Exception
@@ -43,7 +43,7 @@ public class StatiqueSite implements Callable<Integer>
     */
    public static void main(String[] args)
    {
-      int exitCode = new CommandLine(new StatiqueSite()).execute(args);
+      int exitCode = new CommandLine(new Statique()).execute(args);
       System.exit(exitCode);
    }
 }

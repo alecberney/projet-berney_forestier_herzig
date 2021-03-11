@@ -1,7 +1,7 @@
 /*
  -----------------------------------------------------------------------------------
  Cours       : Génie logiciel (GEN)
- Fichier     : New
+ Fichier     : Init
  Auteur(s)   : Forestier Quentin & Melvyn Herzig
  Date        : 06.03.2021
  -----------------------------------------------------------------------------------
@@ -14,11 +14,11 @@ import picocli.CommandLine.Command;
 import java.util.concurrent.Callable;
 
 /**
- * Class implémentant la sous commande new.
+ * Class implémentant la sous commande init.
  * @author Herzig Melvyn
  */
-@Command(name = "new", description = "Initialize a static site directory")
-public class New implements Callable<Integer>
+@Command(name = "init", description = "Initialize a static site directory")
+public class Init implements Callable<Integer>
 {
 
   /**

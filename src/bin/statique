@@ -1,0 +1,3 @@
+#!/bin/sh
+DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+java -cp "$DIR/../lib/projet-berney_forestier_herzig-0.0.1-SNAPSHOT-launcher.jar" gen.Statique "$@"

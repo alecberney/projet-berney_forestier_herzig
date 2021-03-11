@@ -1,7 +1,7 @@
 /*
  -----------------------------------------------------------------------------------
  Cours       : Génie logiciel (GEN)
- Fichier     : Main.h
+ Fichier     : StatiqueTest
  Auteur(s)   : Forestier Quentin & Melvyn Herzig
  Date        : 06.03.2021
  -----------------------------------------------------------------------------------
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Classe de test pour la classe gen.Main
  */
-public class StatiqueSiteTest
+public class StatiqueTest
 {
    /**
     * Test de la méthode run.
