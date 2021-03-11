@@ -1,3 +1,6 @@
+(nous somme le groupe qui n'a pas pu clonner le repo pour la documentation)
+Vous la trouvez mise à jour dans la branche main "Rapport.docx".
+
 # projet-berney_forestier_herzig
 Ce projet est réalisé durant le cours génie logiciel de la HEIG-VD.
 Il met à disposition un générateur de sites statiques.
@@ -31,6 +34,10 @@ Commands:
 	build  Build a static site
 	serve  Serve a static site
 ```
+# Branches
+**Branches d'un sprint:** sprint-x (avec x = 1,2,3,4)  
+**Branches qui ajoutent une fonctionnalité:** ft-<featuredesc>
+**Branches qui résolvent un bug:** bg-<nameofbugsolved>
 
 # Conventions de programmation
 
