@@ -80,9 +80,9 @@ Les classes et les méthodes sont commentées au format Javadoc.
 ```
 
 ### Nommage
-Tous les noms seront en camel case sauf pour les constantes où les espaces seront des ‘_’ et en majuscules.
-**Classe :** Première lettre en majuscule, MaClasse.java
-**Fonction :** Première lettre en minuscule, maFonction()
-**Ma constante :** final int UNE_CONSTANTE.
+Tous les noms seront en camel case sauf pour les constantes où les espaces seront des ‘_’ et en majuscules.  
+**Classe :** Première lettre en majuscule, MaClasse.java  
+**Fonction :** Première lettre en minuscule, maFonction()  
+**Ma constante :** final int UNE_CONSTANTE.  
 
   
