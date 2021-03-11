@@ -57,8 +57,8 @@ Toujours après un retour à la ligne
  -----------------------------------------------------------------------------------
  */
  ```
- ## Commentaires
- Les classes et les méthodes sont commentées au format Javadoc.
+## Commentaires
+Les classes et les méthodes sont commentées au format Javadoc.
 
 ### Classes 
  ```
@@ -69,12 +69,20 @@ Toujours après un retour à la ligne
  */
   ```
  
- ### Méthodes
-  ```
- /**
+### Méthodes
+```
+/**
  * Description de la méthode
  * @param param1 Description du premier paramètre.
  * @param param2 Description du second paramètre.
  * @return Que retourne la méthode..
  */
-  ```
+```
+
+### Nommage
+Tous les noms seront en camel case sauf pour les constantes où les espaces seront des ‘_’ et en majuscules.
+**Classe :** Première lettre en majuscule, MaClasse.java
+**Fonction :** Première lettre en minuscule, maFonction()
+**Ma constante :** final int UNE_CONSTANTE.
+
+  
