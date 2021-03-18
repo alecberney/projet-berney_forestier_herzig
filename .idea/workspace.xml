@@ -5,15 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9f02a5a-7cc9-4aea-a93c-f067ba0d3c99" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/gen/command/InitTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assembly/assembly.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/assembly/assembly.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gen/Statique.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gen/Statique.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gen/command/Build.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gen/command/Build.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gen/command/Init.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gen/command/Init.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/gen/StatiqueTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/gen/StatiqueTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -29,22 +38,71 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
   </component>
-  <component name="RunManager" selected="JUnit.StatiqueTest">
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.InitTest">
+    <configuration name="Statique" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gen.Statique" />
       <module name="projet-berney_forestier_herzig" />
-      <option name="PROGRAM_PARAMETERS" value="-version" />
+      <option name="PROGRAM_PARAMETERS" value="init " />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InitTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projet-berney_forestier_herzig" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gen.command.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="gen.command" />
+      <option name="MAIN_CLASS_NAME" value="gen.command.InitTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InitTest.runTestEmptyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projet-berney_forestier_herzig" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gen.command.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="gen.command" />
+      <option name="MAIN_CLASS_NAME" value="gen.command.InitTest" />
+      <option name="METHOD_NAME" value="runTestEmptyPath" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InitTest.runTestWithPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projet-berney_forestier_herzig" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gen.command.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="gen.command" />
+      <option name="MAIN_CLASS_NAME" value="gen.command.InitTest" />
+      <option name="METHOD_NAME" value="runTestWithPath" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -64,8 +122,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Statique" />
+      <item itemvalue="JUnit.StatiqueTest" />
+      <item itemvalue="JUnit.InitTest" />
+      <item itemvalue="JUnit.InitTest.runTestEmptyPath" />
+      <item itemvalue="JUnit.InitTest.runTestWithPath" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.InitTest" />
+        <item itemvalue="JUnit.InitTest.runTestWithPath" />
+        <item itemvalue="JUnit.InitTest.runTestEmptyPath" />
         <item itemvalue="JUnit.StatiqueTest" />
       </list>
     </recent_temporary>
@@ -82,6 +150,7 @@
       <workItem from="1616067834018" duration="128000" />
       <workItem from="1616072431749" duration="5000" />
       <workItem from="1616090387787" duration="2252000" />
+      <workItem from="1616095063118" duration="5398000" />
     </task>
     <servers />
   </component>
@@ -101,5 +170,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

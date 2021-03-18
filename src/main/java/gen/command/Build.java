@@ -20,7 +20,6 @@ import java.util.concurrent.Callable;
 @Command(name = "build", description = "Build a static site")
 public class Build implements Callable<Integer>
 {
-
   /**
    * Méthode pour l'appel de la commande build.
    */
