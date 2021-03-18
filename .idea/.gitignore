@@ -1,8 +1,5 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Datasource local storage ignored files
-/../../../../../../../../../../../../:\Users\melvy\Desktop\Application\Drive\HEIG_VD\4em semestre\GEN\labo2\projet-berney_forestier_herzig\.idea/dataSources/
-/dataSources.local.xml
-# Editor-based HTTP Client requests
-/httpRequests/
+# Target
+target/
+
+# statique
+statique/
