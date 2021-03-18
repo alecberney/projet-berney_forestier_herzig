@@ -11,12 +11,15 @@ Il met à disposition un générateur de sites statiques.
   * Herzig Melvyn
   
 # Installation et utilisation
-Construction et dézippage du projet.
+**MacOS/Linux:**
+
 ```
 mvn clean install \
-&& rm -fr statique \
-&& unzip target/statique.zip
+    && unzip -o target/statique.zip
 ```
+
+**Windows:** Utilise git bash iu n'importe quel autre bash basé sur unix. Ou faire un mvn clean install -> supprimer manuellement le vieux dossier "statique" à la racine du projet and dézipper la nouvelle archive *target/statique.zip*.
+
  
 Ajout du répertoire bin au PATH
 ```
