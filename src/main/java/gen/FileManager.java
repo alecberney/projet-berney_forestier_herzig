@@ -2,7 +2,7 @@
  -----------------------------------------------------------------------------------
  Cours       : Génie logiciel (GEN)
  Fichier     : Statique
- Auteur(s)   : Forestier Quentin & Melvyn Herzig
+ Auteur(s)   : Berney Alec & Forestier Quentin & Melvyn Herzig
  Date        : 06.03.2021
  -----------------------------------------------------------------------------------
  */
@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import org.apache.commons.io.FileUtils;
 
 /**
  * Class gérant la structure de fichiers pour Statique.
@@ -49,6 +51,27 @@ public class FileManager
          catch (IOException e)
          {
             System.out.println(e.getMessage());
+         }
+      }
+   }
+
+   /**
+    * Pour un chemin donné, supprime tous dossiers et fichiers
+    * @param path Chemin du répertoire à supprimer.
+    */
+   public static void clean(String path)
+   {
+      File folder  = new File(path);
+
+      if(folder.exists())
+      {
+         try
+         {
+            FileUtils.deleteDirectory(folder);
+         }
+         catch (IOException e)
+         {
+            e.printStackTrace();
          }
       }
    }
