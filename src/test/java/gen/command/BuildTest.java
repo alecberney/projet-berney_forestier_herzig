@@ -26,7 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Classe de test pour la commande init
+ * Class de test pour la commande build
+ *
+ * @author Forestier Quentin
  */
 public class BuildTest
 {
