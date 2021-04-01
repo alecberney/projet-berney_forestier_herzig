@@ -194,6 +194,7 @@ public class BuildTest
         catch (IOException e)
         {
             e.printStackTrace();
+            System.out.println("markdowntohtml");
         }
     }
 
@@ -235,6 +236,7 @@ public class BuildTest
         catch (IOException e)
         {
             e.printStackTrace();
+            System.out.println("clean");
         }
     }
 
