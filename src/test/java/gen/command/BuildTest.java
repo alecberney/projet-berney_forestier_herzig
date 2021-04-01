@@ -1,9 +1,9 @@
 /*
  -----------------------------------------------------------------------------------
  Cours       : Génie logiciel (GEN)
- Fichier     : command.InitTest
+ Fichier     : command.BuildTest
  Auteur(s)   : Forestier Quentin & Melvyn Herzig
- Date        : 06.03.2021
+ Date        : 01.04.2021
  -----------------------------------------------------------------------------------
  */
 
@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -51,7 +52,6 @@ public class BuildTest
 
         File index = new File("./build/index.html");
 
-        String fullpath = index.getAbsolutePath();
         assertTrue(index.exists());
 
     }
@@ -95,7 +95,7 @@ public class BuildTest
         cmd.execute(args);
         try
         {
-            FileWriter writer = new FileWriter("./" + path + "/index.md");
+            FileWriter writer = new FileWriter("./" + path + "/index.md", StandardCharsets.UTF_8);
             writer.write("---\n" +
                     "titre: Article de test\n" +
                     "auteur: Quentin Forestier\n" +
@@ -186,6 +186,7 @@ public class BuildTest
                     "\n" +
                     "\t</body>\n" +
                     "</html>";
+
             assertEquals(expectedOutput, data.trim());
         }
         catch (IOException e)
