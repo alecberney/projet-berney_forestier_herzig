@@ -23,7 +23,7 @@ mvn clean install \
 **Windows:** Utilise git bash ou n'importe quel autre bash basé sur unix. Ou faire un mvn clean install -> supprimer manuellement le vieux dossier "statique" à la racine du projet and dézipper la nouvelle archive *target/statique.zip*.
 
 ### Ajout au path
- 
+ depuis le répertoire du projer
 **MacOS/Linux:**  
 ```
 export PATH=$PATH:`pwd`/statique/bin
@@ -43,13 +43,38 @@ Executer statique donne le résultat suivant
 statique
 Usage: statique [COMMAND]
 A static site generator.
-      -version
+      -version Print software version
 Commands:
 	new    Initialize a static site directory
 	clean  Clean a static site
 	build  Build a static site
 	serve  Serve a static site
 ```
+La commande serve ne fait pas partie de ce sprint et n'est pas encore implémentée.
+Le fichier config est généré mais n'est pas encore pris en compte car nous n'avons pas cerné son utilité. Il sera implémenté dans une future version.
+
+### metadonnées
+```
+---
+key1: value
+key2:
+  - value 1
+  - value 2
+---
+
+document body start here
+```
+sont traduits par:
+```
+<meta name="key1" content="value">
+<meta name="key2" content="value1, value2">
+```
+
+### contenu
+Le contenu peut être ajouté en suivant la spécification commonmark:
+https://commonmark.org/help/
+Le text sans décoration markdown est inclus dans des balises <p> some text </p>
+
 # GitHub
 ## Langues
 	* Branches -> En anglais  
