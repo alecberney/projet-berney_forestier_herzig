@@ -73,7 +73,7 @@ sont traduits par:
 ### contenu
 Le contenu peut être ajouté en suivant la spécification commonmark:
 https://commonmark.org/help/
-Le text sans décoration markdown est inclus dans des balises <p> some text </p>
+Le text sans décoration markdown est inclus dans des balises "paragraphe"
 
 # GitHub
 ## Langues
