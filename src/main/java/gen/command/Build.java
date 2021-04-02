@@ -135,11 +135,15 @@ public class Build implements Callable<Integer>
             {
                 try
                 {
+                    InputStreamReader in = new InputStreamReader(Files.newInputStream(Path.of(file.getPath())));
                     var doc =
-                            parser.parseReader(new InputStreamReader(Files.newInputStream(Path.of(file.getPath()))));
+                            parser.parseReader(in);
                     doc.accept(visitor);
 
                     Map<String, List<String>> data = visitor.getData();
+
+                    in.close();
+
                     return String.format("<!doctype html>\n" +
                             "<html>\n" +
                             "\t<head>\n" +
