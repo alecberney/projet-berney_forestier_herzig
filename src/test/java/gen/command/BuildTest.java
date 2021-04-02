@@ -142,6 +142,10 @@ public class BuildTest
             cmd.execute(args);
 
             File file = new File("./" + path + "/build/index.html");
+            if (file.exists())
+            {
+                System.out.println("Le fichier existe");
+            }
             String data = FileUtils.readFileToString(file, "UTF-8");
 
             String expectedOutput = "<!doctype html>\n" +
@@ -194,7 +198,6 @@ public class BuildTest
         catch (IOException e)
         {
             e.printStackTrace();
-            System.out.println("markdowntohtml");
         }
     }
 
@@ -236,7 +239,6 @@ public class BuildTest
         catch (IOException e)
         {
             e.printStackTrace();
-            System.out.println("clean");
         }
     }
 
