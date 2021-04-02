@@ -88,8 +88,8 @@ public class Build implements Callable<Integer>
         {
             buildRoot = new File(root.getPath() + "/build");
 
-            FileUtils.deleteDirectory(buildRoot);
-
+            if(buildRoot.exists())
+                FileUtils.cleanDirectory(buildRoot);
             FileUtils.copyDirectory(root, buildRoot);
 
         }

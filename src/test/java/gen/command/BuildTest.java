@@ -136,16 +136,14 @@ public class BuildTest
                     "\n" +
                     "![Une image plus petite](./images/image.png){width=200}");
 
+
             writer.close();
 
             args = new String[]{"build", path};
             cmd.execute(args);
 
             File file = new File("./" + path + "/build/index.html");
-            if (file.exists())
-            {
-                System.out.println("Le fichier existe");
-            }
+
             String data = FileUtils.readFileToString(file, "UTF-8");
 
             String expectedOutput = "<!doctype html>\n" +
