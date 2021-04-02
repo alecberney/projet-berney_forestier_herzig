@@ -57,7 +57,7 @@ public class StatiqueTest
       String expected = "Statique version: 0.0.1";
       cmd.execute(args);
 
-      //Vérifie si la commande donne la bonne sortie.
+      //Test sans but. Vérifie si la structure du projet fonctionne.
       assertEquals(expected,outputStreamCaptor.toString().trim());
    }
 

@@ -11,39 +11,23 @@ Il met à disposition un générateur de sites statiques.
   * Herzig Melvyn
   
 # Installation et utilisation
-
-### Dezippage de l'archive
-**MacOS/Linux:**
-
+Construction et dézippage du projet.
 ```
 mvn clean install \
-    && unzip -o target/statique.zip
+&& rm -fr statique \
+&& unzip target/statique.zip
 ```
-
-**Windows:** Utilise git bash ou n'importe quel autre bash basé sur unix. Ou faire un mvn clean install -> supprimer manuellement le vieux dossier "statique" à la racine du projet and dézipper la nouvelle archive *target/statique.zip*.
-
-### Ajout au path
  
-**MacOS/Linux:**  
+Ajout du répertoire bin au PATH
 ```
 export PATH=$PATH:`pwd`/statique/bin
 ```
 
-**Windows:**
-Dans cmd.exe
-```  
-SET PATH=%PATH%;%cd%\statique\bin
-```
-
-### Exécution  
-Sous windows penser à utiliser cmd.exe
-
-Executer statique donne le résultat suivant
+Executé statique donne le résultat suivant
 ```
 statique
 Usage: statique [COMMAND]
 A static site generator.
-      -version
 Commands:
 	new    Initialize a static site directory
 	clean  Clean a static site

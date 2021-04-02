@@ -29,8 +29,9 @@ import gen.command.Serve;
         subcommands = {Init.class, Clean.class, Build.class, Serve.class})
 public class Statique implements Callable<Integer>
 {
-   @CommandLine.Option(names = "-version", description = "Print software version")
-   boolean displayVersionNeeded;
+   @CommandLine.Option(names = "-version") boolean displayVersionNeeded;
+
+
 
    /**
     * Méthode pour l'appel de la commande statique

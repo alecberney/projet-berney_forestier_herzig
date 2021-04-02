@@ -1,7 +1,7 @@
 /*
  -----------------------------------------------------------------------------------
  Cours       : Génie logiciel (GEN)
- Fichier     : Init
+ Fichier     : Build
  Auteur(s)   : Forestier Quentin & Melvyn Herzig
  Date        : 06.03.2021
  -----------------------------------------------------------------------------------
@@ -9,27 +9,24 @@
 
 package gen.command;
 
-import gen.FileManager;
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 import java.util.concurrent.Callable;
 
 /**
- * Class implémentant la sous commande init.
+ * Class implémentant la sous commande build.
  * @author Herzig Melvyn
  */
-@Command(name = "init", description = "Initialize a static site directory")
-public class Init implements Callable<Integer>
+@Command(name = "build", description = "Build a static site")
+public class Build implements Callable<Integer>
 {
-  @CommandLine.Parameters(index = "0", description = "path to futur workspace", defaultValue = "/")String path;
 
   /**
-   * Méthode pour l'appel de la commande new
+   * Méthode pour l'appel de la commande build.
    */
   @Override public Integer call()
   {
-    FileManager.instantiate(path);
+    System.out.printf("build");
     return 0;
   }
 
