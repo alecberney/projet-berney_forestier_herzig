@@ -103,10 +103,10 @@ public class CleanTest
         cmd.execute(args);
 
         // Tous les fichiers et dossiers sont bien supprimés?
-        assertTrue(!folder.exists());
-        assertTrue(!underFolder.exists());
-        assertTrue(!index.exists());
-        assertTrue(!image.exists());
+        assertFalse(folder.exists());
+        assertFalse(underFolder.exists());
+        assertFalse(index.exists());
+        assertFalse(image.exists());
     }
 
     /**
