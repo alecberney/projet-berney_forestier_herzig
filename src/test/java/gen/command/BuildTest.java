@@ -76,7 +76,7 @@ public class BuildTest
 
         cmd.execute(args);
 
-        File index = new File("./" + path + "/build/index.html");
+        File index = new File("." + path + "/build/index.html");
 
         assertTrue(index.exists());
     }

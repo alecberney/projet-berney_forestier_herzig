@@ -86,7 +86,7 @@ public class Build implements Callable<Integer>
     {
         try
         {
-            buildRoot = new File(root.getAbsolutePath() + "/build");
+            buildRoot = new File(root.getPath() + "/build");
 
             FileUtils.deleteDirectory(buildRoot);
 
@@ -109,7 +109,7 @@ public class Build implements Callable<Integer>
         parser = Parser.builder().extensions(extensions).build();
         renderer = HtmlRenderer.builder().extensions(extensions).escapeHtml(true).build();
 
-        for (File f : FileUtils.listFiles(new File(buildRoot.getAbsolutePath()), null, true))
+        for (File f : FileUtils.listFiles(new File(buildRoot.getPath()), null, true))
         {
             createHTMLFile(f);
         }
@@ -136,7 +136,7 @@ public class Build implements Callable<Integer>
                 try
                 {
                     var doc =
-                            parser.parseReader(new InputStreamReader(Files.newInputStream(Path.of(file.getAbsolutePath()))));
+                            parser.parseReader(new InputStreamReader(Files.newInputStream(Path.of(file.getPath()))));
                     doc.accept(visitor);
 
                     Map<String, List<String>> data = visitor.getData();
@@ -169,7 +169,7 @@ public class Build implements Callable<Integer>
      */
     private void createHTMLFile(File file)
     {
-        String basename = FilenameUtils.getBaseName(file.getAbsolutePath());
+        String basename = FilenameUtils.getBaseName(file.getPath());
         String htmlContent = mdToHtml(file);
         if (htmlContent == null)
         {
