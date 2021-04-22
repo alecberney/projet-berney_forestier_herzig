@@ -79,6 +79,25 @@ public class InitTest
       assertTrue(index.exists() && config.exists());
    }
 
+   @Test
+   void runTestTemplateFolderCreation()
+   {
+      // Préparation de la commande.
+      Callable<Integer> callable = new Statique();
+      CommandLine cmd = new CommandLine(callable);
+
+      // Arguments.
+      String[] args = new String[]{"init", path};
+
+      // Exécution
+      cmd.execute(args);
+
+      // Récupération du dossier
+      File templateFolder = new File("./"+path+"/template");
+
+      assertTrue(templateFolder.exists());
+   }
+
    /**
     * Supprimer les fichiers à la fin des tests
     */
@@ -99,5 +118,9 @@ public class InitTest
 
       File dir = new File("./"+path);
       if(dir.exists()) dir.delete();
+
+      // Nettoie après le dossier template
+      File templateFolder = new File("./"+path+"/template");
+      if(templateFolder.exists()) templateFolder.delete();
    }
 }
