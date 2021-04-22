@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9f02a5a-7cc9-4aea-a93c-f067ba0d3c99" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/gen/command/InitTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gen/Statique.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gen/Statique.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gen/command/Build.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gen/command/Build.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gen/command/Init.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gen/command/Init.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/gen/StatiqueTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/gen/StatiqueTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gen/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gen/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/gen/command/InitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/gen/command/InitTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +33,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
   </component>
@@ -42,20 +41,18 @@
     <configuration name="Statique" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gen.Statique" />
       <module name="projet-berney_forestier_herzig" />
-      <option name="PROGRAM_PARAMETERS" value="init " />
+      <option name="PROGRAM_PARAMETERS" value="init /test" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -151,6 +148,7 @@
       <workItem from="1616072431749" duration="5000" />
       <workItem from="1616090387787" duration="2252000" />
       <workItem from="1616095063118" duration="5398000" />
+      <workItem from="1619082254530" duration="4519000" />
     </task>
     <servers />
   </component>
