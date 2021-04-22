@@ -104,23 +104,8 @@ public class InitTest
    @AfterAll
    static void clean()
    {
-      // Nettoie le test runTestEmptyPath
-      File index  = new File("./index.md");
-      File config  = new File("./config.yaml");
-      if(index.exists()) index.delete();
-      if(config.exists()) config.delete();
-
-      // Nettoie après le test runTestWithPath
-      index  = new File("./"+path+"/index.md");
-      config  = new File("./"+path+"/config.yaml");
-      if(index.exists()) index.delete();
-      if(config.exists()) config.delete();
-
+      // Nettoie après le dossier template
       File dir = new File("./"+path);
       if(dir.exists()) dir.delete();
-
-      // Nettoie après le dossier template
-      File templateFolder = new File("./"+path+"/template");
-      if(templateFolder.exists()) templateFolder.delete();
    }
 }

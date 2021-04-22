@@ -30,16 +30,19 @@ public class FileManager
    private FileManager(){}
 
    /**
-    * Pour un chemin donné, crée les fichiers par défaut
+    * Pour un chemin donné, crée le dossier template avec les fichiers par défauts.
     * @param path Chemin ou créer le répertoire.
     */
    public static void instantiate(String path)
    {
+      Path p = Paths.get(path);
+      String pathStart = p.isAbsolute() ? "" : ".";
+
+      File templateDir = new File(pathStart + path + "/template");
+      templateDir.mkdir();
 
       for(String fileName : baseFiles)
       {
-         Path p = Paths.get(path);
-         String pathStart = p.isAbsolute() ? "" : ".";
 
          File file = new File(pathStart + path + "/" + fileName);
 
