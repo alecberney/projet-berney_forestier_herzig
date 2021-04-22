@@ -2,13 +2,14 @@
  -----------------------------------------------------------------------------------
  Cours       : Génie logiciel (GEN)
  Fichier     : command.InitTest
- Auteur(s)   : Forestier Quentin & Melvyn Herzig
+ Auteur(s)   : Herzig Melvyn
  Date        : 06.03.2021
  -----------------------------------------------------------------------------------
  */
 
 package gen.command;
 
+import gen.FileManager;
 import gen.Statique;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
@@ -24,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Classe de test pour la commande init
+ * @author Herzig Melvyn
+ * @date 22/04/2021
  */
 public class InitTest
 {
@@ -82,6 +85,9 @@ public class InitTest
       assertTrue(index.exists() && config.exists());
    }
 
+   /**
+    * Test si le dossier template se crée.
+    */
    @Test
    void runTestTemplateFolderCreation()
    {
@@ -101,6 +107,9 @@ public class InitTest
       assertTrue(templateFolder.exists());
    }
 
+   /**
+    * Test si le fichier menu se crée et se rempli correctement
+    */
    @Test
    void runTestMenuCreation()
    {
@@ -118,9 +127,44 @@ public class InitTest
       cmd.execute(args);
 
       // Résultat
-      String content = "<ul>\n" +
-              "\t<li><a href=\"index.html\">home</a></li>\n" +
-              "</ul>";
+      String content = FileManager.menuContent;
+
+      // Lecture du menu
+      String data = "";
+      try
+      {
+         data = FileUtils.readFileToString(menu, "UTF-8");
+         int i = 0;
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+
+      assertEquals(data, content);
+   }
+
+   /**
+    * Test si le fichier template se crée et se rempli correctement
+    */
+   @Test
+   void runTestTemplateFileCreation()
+   {
+      // Préparation de la commande.
+      Callable<Integer> callable = new Statique();
+      CommandLine cmd = new CommandLine(callable);
+
+      // Arguments.
+      String[] args = new String[]{"init", path};
+
+      File menu  = new File("./"+path+"/template/menu.html");
+      if(menu.exists()) menu.delete();
+
+      // Exécution
+      cmd.execute(args);
+
+      // Résultat
+      String content = FileManager.templateContent;
 
       // Lecture du menu
       String data = "";

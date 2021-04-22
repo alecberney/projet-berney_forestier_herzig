@@ -26,6 +26,27 @@ public class FileManager
     */
    private static final String[] baseFiles = {"config.yaml", "index.md"};
 
+   /**
+    * Contenu du fichier menu.html
+    */
+   public static final String menuContent = "<ul>\n" +
+                                             "\t<li><a href=\"index.html\">home</a></li>\n" +
+                                             "</ul>";
+   /**
+    * Contenu du fichier template.html
+    */
+   public static final String templateContent = "<!doctype html>\n" +
+                                                 "<html>\n" +
+                                                 "\t<head>\n" +
+                                                 "\t\t<meta charset=\"UTF-8\">\n" +
+                                                 "\t\t<title>{{ site.titre }} | {{ page.titre }}</title>" +
+                                                 "\t</head>\n" +
+                                                 "\t<body>\n" +
+                                                 "\t\t {{ include menu.html }}\n" +
+                                                 "\t\t {{ content }}\n" +
+                                                 "\t</body>\n" +
+                                                 "</html>";
+
    private FileManager(){}
 
    /**
@@ -70,9 +91,7 @@ public class FileManager
     */
    private static void createMenuHtml(String path)
    {
-      String content = "<ul>\n" +
-                        "\t<li><a href=\"index.html\">home</a></li>\n" +
-                        "</ul>";
+      String content = FileManager.menuContent;
       createFile(new File(path + "/menu.html"), content);
    }
 
