@@ -157,8 +157,8 @@ public class InitTest
       // Arguments.
       String[] args = new String[]{"init", path};
 
-      File menu  = new File("./"+path+"/template/menu.html");
-      if(menu.exists()) menu.delete();
+      File template  = new File("./"+path+"/template/template.html");
+      if(template.exists()) template.delete();
 
       // Exécution
       cmd.execute(args);
@@ -170,7 +170,7 @@ public class InitTest
       String data = "";
       try
       {
-         data = FileUtils.readFileToString(menu, "UTF-8");
+         data = FileUtils.readFileToString(template, "UTF-8");
          int i = 0;
       }
       catch (IOException e)

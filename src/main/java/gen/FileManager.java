@@ -65,8 +65,9 @@ public class FileManager
       File templateDir = new File(templatePath);
       templateDir.mkdirs();
 
-      // Create menu.html
+      // Create templated files
       createMenuHtml(templatePath);
+      createTemplateHtml(templatePath);
 
       for(String fileName : baseFiles)
       {
@@ -96,23 +97,22 @@ public class FileManager
    }
 
    /**
+    * Crée le fichier menu.html dans le dossier situé dans path.
+    * @param path Dossier qui reçoit le menu.html
+    */
+   private static void createTemplateHtml(String path)
+   {
+      String content = FileManager.templateContent;
+      createFile(new File(path + "/template.html"), content);
+   }
+
+   /**
     * Crée le fichier file et y insère le contenu content.
     * @param file Fichier à créer.
     * @param content Contenu à insérer.
     */
    public static void createFile(File file, String content)
    {
-
-      try
-      {
-         int i = 0;
-         file.createNewFile();
-      }
-      catch (IOException e)
-      {
-         e.printStackTrace();
-      }
-
       try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file))))
       {
          out.write(content);
