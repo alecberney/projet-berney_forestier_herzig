@@ -9,8 +9,7 @@
 
 package gen;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -38,8 +37,15 @@ public class FileManager
       Path p = Paths.get(path);
       String pathStart = p.isAbsolute() ? "" : ".";
 
-      File templateDir = new File(pathStart + path + "/template");
-      templateDir.mkdir();
+      File dir = new File(pathStart);
+      dir.mkdir();
+
+      String templatePath = pathStart + path + "/template";
+      File templateDir = new File(templatePath);
+      templateDir.mkdirs();
+
+      // Create menu.html
+      createMenuHtml(templatePath);
 
       for(String fileName : baseFiles)
       {
@@ -55,6 +61,46 @@ public class FileManager
          {
             System.out.println(e.getMessage());
          }
+      }
+   }
+
+   /**
+    * Crée le fichier menu.html dans le dossier situé dans path.
+    * @param path Dossier qui reçoit le menu.html
+    */
+   private static void createMenuHtml(String path)
+   {
+      String content = "<ul>\n" +
+                        "\t<li><a href=\"index.html\">home</a></li>\n" +
+                        "</ul>";
+      createFile(new File(path + "/menu.html"), content);
+   }
+
+   /**
+    * Crée le fichier file et y insère le contenu content.
+    * @param file Fichier à créer.
+    * @param content Contenu à insérer.
+    */
+   public static void createFile(File file, String content)
+   {
+
+      try
+      {
+         int i = 0;
+         file.createNewFile();
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+
+      try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file))))
+      {
+         out.write(content);
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
       }
    }
 

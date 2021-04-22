@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9f02a5a-7cc9-4aea-a93c-f067ba0d3c99" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gen/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gen/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/gen/command/InitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/gen/command/InitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/config.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/index.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +43,7 @@
     <configuration name="Statique" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gen.Statique" />
       <module name="projet-berney_forestier_herzig" />
-      <option name="PROGRAM_PARAMETERS" value="init " />
+      <option name="PROGRAM_PARAMETERS" value="init /test" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -144,7 +150,7 @@
       <workItem from="1616072431749" duration="5000" />
       <workItem from="1616090387787" duration="2252000" />
       <workItem from="1616095063118" duration="5398000" />
-      <workItem from="1619082254530" duration="1074000" />
+      <workItem from="1619082254530" duration="3683000" />
     </task>
     <servers />
   </component>

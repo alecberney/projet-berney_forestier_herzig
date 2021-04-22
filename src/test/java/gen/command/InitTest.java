@@ -10,13 +10,16 @@
 package gen.command;
 
 import gen.Statique;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -98,14 +101,66 @@ public class InitTest
       assertTrue(templateFolder.exists());
    }
 
+   @Test
+   void runTestMenuCreation()
+   {
+      // Préparation de la commande.
+      Callable<Integer> callable = new Statique();
+      CommandLine cmd = new CommandLine(callable);
+
+      // Arguments.
+      String[] args = new String[]{"init", path};
+
+      File menu  = new File("./"+path+"/template/menu.html");
+      if(menu.exists()) menu.delete();
+
+      // Exécution
+      cmd.execute(args);
+
+      // Résultat
+      String content = "<ul>\n" +
+              "\t<li><a href=\"index.html\">home</a></li>\n" +
+              "</ul>";
+
+      // Lecture du menu
+      String data = "";
+      try
+      {
+         data = FileUtils.readFileToString(menu, "UTF-8");
+         int i = 0;
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+
+      assertEquals(data, content);
+   }
+
    /**
     * Supprimer les fichiers à la fin des tests
     */
    @AfterAll
    static void clean()
    {
-      // Nettoie après le dossier template
+      // Nettoie le test runTestEmptyPath
+      File index  = new File("./index.md");
+      File config  = new File("./config.yaml");
+      if(index.exists()) index.delete();
+      if(config.exists()) config.delete();
+
+      // Supprime le dossier test
       File dir = new File("./"+path);
-      if(dir.exists()) dir.delete();
+      if(dir.exists())
+      {
+         try
+         {
+            FileUtils.deleteDirectory(dir);
+         }
+         catch (IOException e)
+         {
+            e.printStackTrace();
+         }
+      }
    }
 }
