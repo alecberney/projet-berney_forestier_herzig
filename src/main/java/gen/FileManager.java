@@ -50,29 +50,38 @@ public class FileManager
    private FileManager(){}
 
    /**
+    * Retourne un chemin utilisable d'après le chemin reçu en paramètre.
+    * @param path Chemin à rendre utilisable.
+    * @return Retourne le chemin utilisable.
+    */
+   public static String getRealPath(String path)
+   {
+      Path p = Paths.get(path);
+      String pathStart = p.isAbsolute() ? "" : ".";
+
+      return pathStart + path;
+   }
+
+   /**
     * Pour un chemin donné, crée le dossier template avec les fichiers par défauts.
     * @param path Chemin ou créer le répertoire.
     */
    public static void instantiate(String path)
    {
-      Path p = Paths.get(path);
-      String pathStart = p.isAbsolute() ? "" : ".";
+      String realPath = getRealPath(path);
 
-      File dir = new File(pathStart);
-      dir.mkdir();
-
-      String templatePath = pathStart + path + "/template";
+      String templatePath = realPath + "/template";
       File templateDir = new File(templatePath);
       templateDir.mkdirs();
 
       // Create templated files
       createMenuHtml(templatePath);
-      createTemplateHtml(templatePath);
+      createLayoutHtml(templatePath);
 
       for(String fileName : baseFiles)
       {
 
-         File file = new File(pathStart + path + "/" + fileName);
+         File file = new File(realPath + "/" + fileName);
 
          file.getParentFile().mkdirs();
          try
@@ -100,10 +109,10 @@ public class FileManager
     * Crée le fichier menu.html dans le dossier situé dans path.
     * @param path Dossier qui reçoit le menu.html
     */
-   private static void createTemplateHtml(String path)
+   private static void createLayoutHtml(String path)
    {
       String content = FileManager.templateContent;
-      createFile(new File(path + "/template.html"), content);
+      createFile(new File(path + "/layout.html"), content);
    }
 
    /**
