@@ -157,7 +157,7 @@ public class InitTest
       // Arguments.
       String[] args = new String[]{"init", path};
 
-      File template  = new File("./"+path+"/template/template.html");
+      File template  = new File("./"+path+"/template/layout.html");
       if(template.exists()) template.delete();
 
       // Exécution
