@@ -2,29 +2,30 @@
  -----------------------------------------------------------------------------------
  Cours       : Génie logiciel (GEN)
  Fichier     : Build
- Auteur(s)   : Forestier Quentin & Melvyn Herzig
+ Auteur(s)   : Berney Alec & Forestier Quentin & Melvyn Herzig
  Date        : 06.03.2021
  -----------------------------------------------------------------------------------
  */
 
 package gen.command;
 
+import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 
+import com.github.jknack.handlebars.context.MapValueResolver;
+import com.github.jknack.handlebars.io.FileTemplateLoader;
 import org.apache.commons.io.FilenameUtils;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,7 @@ import org.commonmark.ext.front.matter.YamlFrontMatterVisitor;
 /**
  * Class implémentant la sous commande build.
  *
- * @author Forestier Quentin, Herzig Melvyn
+ * @author Berney Alec, Forestier Quentin, Herzig Melvyn
  */
 @Command(name = "build", description = "Build a static site")
 public class Build implements Callable<Integer>
@@ -66,9 +67,10 @@ public class Build implements Callable<Integer>
     private Parser parser;
     private HtmlRenderer renderer;
 
-    private Map<String, List<String>> configs;
+    private Map<String, String> configs;
 
     private Template layout;
+    private FileTemplateLoader loader;
 
 
     /**
@@ -101,7 +103,16 @@ public class Build implements Callable<Integer>
             {
                 FileUtils.cleanDirectory(buildRoot);
             }
-            FileUtils.copyDirectory(root, buildRoot);
+
+            FileUtils.copyDirectory(root, buildRoot, new FileFilter()
+            {
+                @Override
+                public boolean accept(File pathname)
+                {
+                    // Exclue le fichier .git surtout utile pour notre environnement de test.
+                    return !pathname.getName().startsWith(".");
+                }
+            });
 
             if (tempalteDir.exists())
             {
@@ -138,7 +149,14 @@ public class Build implements Callable<Integer>
             var doc = parser.parseReader(in);
             doc.accept(visitor);
 
-            configs = visitor.getData();
+            Map<String, List<String>> tmp = visitor.getData();
+
+            configs = new HashMap<>();
+
+            for(Map.Entry mapentry : tmp.entrySet())
+            {
+                configs.put((String)mapentry.getKey(), listToString((List<String>)mapentry.getValue()));
+            }
 
             in.close();
             config.delete();
@@ -151,9 +169,14 @@ public class Build implements Callable<Integer>
         // Lecture du fichier layout
         try
         {
-            Handlebars handlebars = new Handlebars();
+            loader = new FileTemplateLoader(new File(root.getPath() + "/template/"));
+            loader.setSuffix(".html");
+            Handlebars handlebars = new Handlebars(loader);
+            handlebars.setPrettyPrint(true);
 
-            layout = handlebars.compileInline(FileUtils.readFileToString(new File(root.getPath() + "/template/layout.html"), "utf8"));
+
+            //handlebars.registerHelper("myHelper", new Helper)
+            layout = handlebars.compile("layout");
         }
         catch (IOException e)
         {
@@ -190,9 +213,12 @@ public class Build implements Callable<Integer>
                             parser.parseReader(in);
                     doc.accept(visitor);
 
-                    Map<String, List<String>> data = visitor.getData();
+                    Map<String, List<String>> tmp = visitor.getData();
 
-
+                    for(Map.Entry mapentry : tmp.entrySet())
+                    {
+                        configs.put((String)mapentry.getKey(), listToString((List<String>)mapentry.getValue()));
+                    }
 
                     in.close();
 
@@ -229,12 +255,16 @@ public class Build implements Callable<Integer>
             htmlFile.createNewFile();
             FileWriter writer = new FileWriter(htmlFile);
 
+            configs.put("content", htmlContent);
 
-            layout.apply(htmlContent, writer);
+            var context = Context.newBuilder(configs).resolver(MapValueResolver.INSTANCE).build();
+
+            layout.apply(context, writer);
 
             //writer.write();
             writer.close();
             file.delete();
+
         }
         catch (IOException e)
         {

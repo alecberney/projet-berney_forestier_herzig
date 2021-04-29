@@ -33,7 +33,7 @@ public class FileManager
                                              "\t<li><a href=\"index.html\">home</a></li>\n" +
                                              "</ul>";
    /**
-    * Contenu du fichier template.html
+    * Contenu du fichier layout.html
     */
    public static final String templateContent = "<!doctype html>\n" +
                                                  "<html>\n" +
@@ -103,7 +103,7 @@ public class FileManager
    private static void createTemplateHtml(String path)
    {
       String content = FileManager.templateContent;
-      createFile(new File(path + "/template.html"), content);
+      createFile(new File(path + "/layout.html"), content);
    }
 
    /**
