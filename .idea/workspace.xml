@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9f02a5a-7cc9-4aea-a93c-f067ba0d3c99" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gen/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gen/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/gen/command/InitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/gen/command/InitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gen/command/Build.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gen/command/Build.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/template.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/template.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +39,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
   </component>
-  <component name="RunManager" selected="JUnit.InitTest">
+  <component name="RunManager" selected="JUnit.All in projet-berney_forestier_herzig">
     <configuration name="Statique" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gen.Statique" />
       <module name="projet-berney_forestier_herzig" />
@@ -46,13 +48,54 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in projet-berney_forestier_herzig" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projet-berney_forestier_herzig" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BuildTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projet-berney_forestier_herzig" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gen.command.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="gen.command" />
+      <option name="MAIN_CLASS_NAME" value="gen.command.BuildTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CleanTest.runTestEmptyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="projet-berney_forestier_herzig" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gen.command.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="gen.command" />
+      <option name="MAIN_CLASS_NAME" value="gen.command.CleanTest" />
+      <option name="METHOD_NAME" value="runTestEmptyPath" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -68,22 +111,6 @@
       <option name="PACKAGE_NAME" value="gen.command" />
       <option name="MAIN_CLASS_NAME" value="gen.command.InitTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="InitTest.runTestEmptyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="projet-berney_forestier_herzig" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="gen.command.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="gen.command" />
-      <option name="MAIN_CLASS_NAME" value="gen.command.InitTest" />
-      <option name="METHOD_NAME" value="runTestEmptyPath" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -104,34 +131,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StatiqueTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="projet-berney_forestier_herzig" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="gen.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="gen" />
-      <option name="MAIN_CLASS_NAME" value="gen.StatiqueTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.Statique" />
-      <item itemvalue="JUnit.StatiqueTest" />
       <item itemvalue="JUnit.InitTest" />
-      <item itemvalue="JUnit.InitTest.runTestEmptyPath" />
       <item itemvalue="JUnit.InitTest.runTestWithPath" />
+      <item itemvalue="JUnit.All in projet-berney_forestier_herzig" />
+      <item itemvalue="JUnit.CleanTest.runTestEmptyPath" />
+      <item itemvalue="JUnit.BuildTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in projet-berney_forestier_herzig" />
+        <item itemvalue="JUnit.BuildTest" />
+        <item itemvalue="JUnit.CleanTest.runTestEmptyPath" />
         <item itemvalue="JUnit.InitTest" />
         <item itemvalue="JUnit.InitTest.runTestWithPath" />
-        <item itemvalue="JUnit.InitTest.runTestEmptyPath" />
-        <item itemvalue="JUnit.StatiqueTest" />
       </list>
     </recent_temporary>
   </component>
@@ -149,6 +163,7 @@
       <workItem from="1616090387787" duration="2252000" />
       <workItem from="1616095063118" duration="5398000" />
       <workItem from="1619082254530" duration="4519000" />
+      <workItem from="1619685521082" duration="1143000" />
     </task>
     <servers />
   </component>
@@ -169,5 +184,16 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/gen/command/CleanTest.java</url>
+          <line>105</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
