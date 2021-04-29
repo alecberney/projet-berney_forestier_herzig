@@ -9,12 +9,19 @@
 
 package gen.command;
 
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
+
 import org.apache.commons.io.FilenameUtils;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -59,6 +66,10 @@ public class Build implements Callable<Integer>
     private Parser parser;
     private HtmlRenderer renderer;
 
+    private Map<String, List<String>> configs;
+
+    private Template layout;
+
 
     /**
      * Méthode pour l'appel de la commande build.
@@ -84,10 +95,18 @@ public class Build implements Callable<Integer>
         try
         {
             buildRoot = new File(root.getPath() + "/build");
+            File tempalteDir = new File(buildRoot + "/template");
 
-            if(buildRoot.exists())
+            if (buildRoot.exists())
+            {
                 FileUtils.cleanDirectory(buildRoot);
+            }
             FileUtils.copyDirectory(root, buildRoot);
+
+            if (tempalteDir.exists())
+            {
+                FileUtils.deleteDirectory(tempalteDir);
+            }
 
         }
         catch (IOException e)
@@ -106,11 +125,45 @@ public class Build implements Callable<Integer>
         parser = Parser.builder().extensions(extensions).build();
         renderer = HtmlRenderer.builder().extensions(extensions).escapeHtml(true).build();
 
+        // Lecture du fichier de configuration
+        try
+        {
+
+            File config = new File(buildRoot.getPath() + "/config.yaml");
+
+            YamlFrontMatterVisitor visitor = new YamlFrontMatterVisitor();
+
+
+            InputStreamReader in = new InputStreamReader(Files.newInputStream(Path.of(config.getPath())));
+            var doc = parser.parseReader(in);
+            doc.accept(visitor);
+
+            configs = visitor.getData();
+
+            in.close();
+            config.delete();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        // Lecture du fichier layout
+        try
+        {
+            Handlebars handlebars = new Handlebars();
+
+            layout = handlebars.compileInline(FileUtils.readFileToString(new File(root.getPath() + "/template/layout.html"), "utf8"));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
         for (File f : FileUtils.listFiles(new File(buildRoot.getPath()), null, true))
         {
             createHTMLFile(f);
         }
-
 
     }
 
@@ -139,23 +192,16 @@ public class Build implements Callable<Integer>
 
                     Map<String, List<String>> data = visitor.getData();
 
+
+
                     in.close();
 
-                    return String.format("<!doctype html>\n" +
-                            "<html>\n" +
-                            "\t<head>\n" +
-                            "<meta charset=\"UTF-8\">\n" +
-                            "%s\n" +
-                            "\t</head>\n" +
-                            "\t<body>\n" +
-                            "%s\n" +
-                            "\t</body>\n" +
-                            "</html>", renderMetadata(data), renderer.render(doc));
+                    return renderer.render(doc);
 
                 }
                 catch (Exception e)
                 {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -184,7 +230,9 @@ public class Build implements Callable<Integer>
             FileWriter writer = new FileWriter(htmlFile);
 
 
-            writer.write(htmlContent);
+            layout.apply(htmlContent, writer);
+
+            //writer.write();
             writer.close();
             file.delete();
         }
@@ -192,6 +240,22 @@ public class Build implements Callable<Integer>
         {
             e.printStackTrace();
         }
+
+    }
+
+    private String listToString(List<String> strings)
+    {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for(String s : strings)
+        {
+            if(first)
+                first = false;
+            else
+                result.append(", ");
+            result.append(s);
+        }
+        return result.toString();
     }
 
     /**
