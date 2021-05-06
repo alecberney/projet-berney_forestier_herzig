@@ -1,8 +1,9 @@
 # Target
-target/
+target/*
+!target/statique.zip
 
 # statique
-statique/
+statique/*
 
 # idea
 .idea
