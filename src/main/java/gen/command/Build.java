@@ -2,17 +2,26 @@
  -----------------------------------------------------------------------------------
  Cours       : Génie logiciel (GEN)
  Fichier     : Build
- Auteur(s)   : Forestier Quentin & Melvyn Herzig
+ Auteur(s)   : Berney Alec & Forestier Quentin & Melvyn Herzig
  Date        : 06.03.2021
  -----------------------------------------------------------------------------------
  */
 
 package gen.command;
 
+import com.github.jknack.handlebars.Context;
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
+
+import com.github.jknack.handlebars.context.MapValueResolver;
+import com.github.jknack.handlebars.internal.text.StringEscapeUtils;
+import com.github.jknack.handlebars.io.FileTemplateLoader;
+import gen.FileManager;
 import org.apache.commons.io.FilenameUtils;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+
 
 import java.io.File;
 import java.io.FileWriter;
@@ -21,6 +30,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +55,7 @@ import org.commonmark.ext.front.matter.YamlFrontMatterVisitor;
 /**
  * Class implémentant la sous commande build.
  *
- * @author Forestier Quentin, Herzig Melvyn
+ * @author Berney Alec, Forestier Quentin, Herzig Melvyn
  */
 @Command(name = "build", description = "Build a static site")
 public class Build implements Callable<Integer>
@@ -55,12 +65,40 @@ public class Build implements Callable<Integer>
     String path;
 
 
+    /**
+     * Dossier root du site
+     */
     private File root;
+
+    /**
+     * Dossier build ou le site est complié
+     */
     private File buildRoot;
 
+    /**
+     * Extensions du parser et builder permettant plus d'options
+     */
     private final LinkedList<Extension> extensions = new LinkedList<>();
+
+    /**
+     *  Parse les fichiers markdown
+     */
     private Parser parser;
+
+    /**
+     * Transforme le résultat du parser en HTML
+     */
     private HtmlRenderer renderer;
+
+    /**
+     * Configuration du site à compiler (clé, valeurs)
+     */
+    private Map<String, String> configs;
+
+    /**
+     * Template a utiliser lors de la création des fichiers HTML
+     */
+    private Template layout;
 
 
     /**
@@ -84,20 +122,10 @@ public class Build implements Callable<Integer>
      */
     private void buildFiles()
     {
-        try
-        {
-            buildRoot = new File(root.getPath() + "/build");
 
-            if(buildRoot.exists())
-                FileUtils.cleanDirectory(buildRoot);
-            FileUtils.copyDirectory(root, buildRoot);
+        buildRoot = FileManager.createBuildDirectory(root);
 
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
+        // Ajout des extensions au parser et builder
         extensions.add(AutolinkExtension.create());
         extensions.add(YamlFrontMatterExtension.create());
         extensions.add(TablesExtension.create());
@@ -106,15 +134,20 @@ public class Build implements Callable<Integer>
         extensions.add(InsExtension.create());
         extensions.add(TaskListItemsExtension.create());
 
+
         parser = Parser.builder().extensions(extensions).build();
         renderer = HtmlRenderer.builder().extensions(extensions).escapeHtml(true).build();
 
+        // Lecture du fichier de configuration
+        readGlobalConfiguration();
+
+        // Lecture du fichier layout
+        createLayoutTemplate();
+
         for (File f : FileUtils.listFiles(new File(buildRoot.getPath()), null, true))
         {
-            createHTMLFile(f);
+            generateHTMLFile(f);
         }
-
-
     }
 
     /**
@@ -140,25 +173,21 @@ public class Build implements Callable<Integer>
                             parser.parseReader(in);
                     doc.accept(visitor);
 
-                    Map<String, List<String>> data = visitor.getData();
+                    Map<String, List<String>> tmp = visitor.getData();
+
+                    for(Map.Entry mapentry : tmp.entrySet())
+                    {
+                        configs.put((String)mapentry.getKey(), listToString((List<String>)mapentry.getValue()));
+                    }
 
                     in.close();
 
-                    return String.format("<!doctype html>\n" +
-                            "<html>\n" +
-                            "\t<head>\n" +
-                            "<meta charset=\"UTF-8\">\n" +
-                            "%s\n" +
-                            "\t</head>\n" +
-                            "\t<body>\n" +
-                            "%s\n" +
-                            "\t</body>\n" +
-                            "</html>", renderMetadata(data), renderer.render(doc));
+                    return renderer.render(doc);
 
                 }
                 catch (Exception e)
                 {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -171,7 +200,7 @@ public class Build implements Callable<Integer>
      *
      * @param file Fichier markdown a transformer
      */
-    private void createHTMLFile(File file)
+    private void generateHTMLFile(File file)
     {
         String basename = FilenameUtils.getBaseName(file.getPath());
         String htmlContent = mdToHtml(file);
@@ -180,16 +209,74 @@ public class Build implements Callable<Integer>
             return;
         }
 
+
         try
         {
             File htmlFile = new File(file.getParentFile() + "/" + basename + ".html");
-            htmlFile.createNewFile();
-            FileWriter writer = new FileWriter(htmlFile);
 
+            configs.put("content", htmlContent);
 
-            writer.write(htmlContent);
-            writer.close();
+            var context = Context.newBuilder(configs).resolver(MapValueResolver.INSTANCE).build();
+
+            FileManager.createFile(htmlFile,StringEscapeUtils.unescapeHtml4(layout.apply(context)));
+
             file.delete();
+
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Converti une liste de string séparant chaque string par une ","
+     * @param strings Liste de string à séparer par des virgules
+     * @return String contenant la liste séparé par des virgules
+     */
+    private String listToString(List<String> strings)
+    {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for(String s : strings)
+        {
+            if(first)
+                first = false;
+            else
+                result.append(", ");
+            result.append(s);
+        }
+        return result.toString();
+    }
+
+    /**
+     * Lis et stock les informations de la configuration globale du site
+     */
+    private void readGlobalConfiguration()
+    {
+        try
+        {
+            File config = new File(buildRoot.getPath() + "/config.yaml");
+
+            YamlFrontMatterVisitor visitor = new YamlFrontMatterVisitor();
+
+
+            InputStreamReader in = new InputStreamReader(Files.newInputStream(Path.of(config.getPath())));
+            var doc = parser.parseReader(in);
+            doc.accept(visitor);
+
+            Map<String, List<String>> tmp = visitor.getData();
+
+            configs = new HashMap<>();
+
+            for(Map.Entry mapentry : tmp.entrySet())
+            {
+                configs.put((String)mapentry.getKey(), listToString((List<String>)mapentry.getValue()));
+            }
+
+            in.close();
+            config.delete();
         }
         catch (IOException e)
         {
@@ -198,29 +285,22 @@ public class Build implements Callable<Integer>
     }
 
     /**
-     * Génère les meta données à partir d'une map
-     *
-     * @param data Map contenant les clés/valeurs des méta données
-     * @return String contenant toutes les balises <meta>
+     * Lis et compile le fichier layout.html afin d'être utilisé comme template pour tous les autres fichiers.
      */
-    private String renderMetadata(Map<String, List<String>> data)
+    private void createLayoutTemplate()
     {
-        StringBuilder metadata = new StringBuilder();
-        for (Map.Entry<String, List<String>> d : data.entrySet())
+        try
         {
-            StringBuilder values = new StringBuilder();
-            for (int i = 0; i < d.getValue().size(); ++i)
-            {
-                if (i != 0)
-                {
-                    values.append(", ");
-                }
+            FileTemplateLoader loader = new FileTemplateLoader(new File(root.getPath() + "/template/"));
+            loader.setSuffix(".html");
+            Handlebars handlebars = new Handlebars(loader);
+            handlebars.setPrettyPrint(true);
 
-                values.append(d.getValue().get(i));
-            }
-            metadata.append(String.format("<meta name=\"%s\" content=\"%s\">\n", d.getKey(), values));
+            layout = handlebars.compile("layout");
         }
-
-        return metadata.toString();
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

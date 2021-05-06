@@ -17,7 +17,7 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * Class gérant la structure de fichiers pour Statique.
- * @author Herzig Melvyn
+ * @author Herzig Melvyn, Forestier Quentin
  */
 public class FileManager
 {
@@ -33,16 +33,16 @@ public class FileManager
                                              "\t<li><a href=\"index.html\">home</a></li>\n" +
                                              "</ul>";
    /**
-    * Contenu du fichier template.html
+    * Contenu du fichier layout.html
     */
    public static final String templateContent = "<!doctype html>\n" +
                                                  "<html>\n" +
                                                  "\t<head>\n" +
                                                  "\t\t<meta charset=\"UTF-8\">\n" +
-                                                 "\t\t<title>{{ site.titre }} | {{ page.titre }}</title>" +
+                                                 "\t\t<title>{{ site_titre }} | {{ page_titre }}</title>" +
                                                  "\t</head>\n" +
                                                  "\t<body>\n" +
-                                                 "\t\t {{ include menu.html }}\n" +
+                                                 "\t\t {{>menu}}\n" +
                                                  "\t\t {{ content }}\n" +
                                                  "\t</body>\n" +
                                                  "</html>";
@@ -93,6 +93,51 @@ public class FileManager
             System.out.println(e.getMessage());
          }
       }
+   }
+
+   /**
+    * Crée le dossier build dans le dossier du site donné en paramètre
+    * @param dirRoot Dossier du site à compiler
+    * @return Renvoi le path du dossier build
+    */
+   public static File createBuildDirectory(File dirRoot)
+   {
+      try
+      {
+         File buildRoot = new File(dirRoot.getPath() + "/build");
+         File tempalteDir = new File(buildRoot + "/template");
+
+         if (buildRoot.exists())
+         {
+            FileUtils.cleanDirectory(buildRoot);
+         }
+
+         // Copie de l'entierté du dossier, permet de garder les images
+         FileUtils.copyDirectory(dirRoot, buildRoot, new FileFilter()
+         {
+            @Override
+            public boolean accept(File pathname)
+            {
+               // Exclue le fichier .git surtout utile pour notre environnement de test.
+               return !pathname.getName().startsWith(".");
+            }
+         });
+
+         // On supprime le dossier template dans le dossier build car inutile
+         if (tempalteDir.exists())
+         {
+            FileUtils.deleteDirectory(tempalteDir);
+         }
+
+         return buildRoot;
+
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+
+      return null;
    }
 
    /**

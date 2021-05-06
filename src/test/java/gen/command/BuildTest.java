@@ -9,17 +9,21 @@
 
 package gen.command;
 
+import com.github.jknack.handlebars.internal.text.StringEscapeUtils;
 import gen.Statique;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.StringUtils;
 import picocli.CommandLine;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.concurrent.Callable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -118,7 +122,7 @@ public class BuildTest
                     "\n" +
                     "~~du texte barré~~\n" +
                     "\n" +
-                    "++du texte soulingé++\n" +
+                    "++du texte souligné++\n" +
                     "\n" +
                     "Qu'est-ce qui est mieux ? \n" +
                     "- [ ]  Ne pas avoir des checkbox\n" +
@@ -144,20 +148,18 @@ public class BuildTest
 
             File file = new File("./" + path + "/build/index.html");
 
-            String data = FileUtils.readFileToString(file, "UTF-8");
+            String data = Files.readString(file.getAbsoluteFile().toPath(), StandardCharsets.UTF_8);
+            data = StringEscapeUtils.unescapeHtml4(data);
 
             String expectedOutput = "<!doctype html>\n" +
                     "<html>\n" +
                     "\t<head>\n" +
-                    "<meta charset=\"UTF-8\">\n" +
-                    "<meta name=\"titre\" content=\"Article de test\">\n" +
-                    "<meta name=\"auteur\" content=\"Quentin Forestier\">\n" +
-                    "<meta name=\"date\" content=\"2021-03-25\">\n" +
-                    "<meta name=\"languages\" content=\"html, css\">\n" +
-                    "\n" +
-                    "\t</head>\n" +
+                    "\t\t<meta charset=\"UTF-8\">\n" +
+                    "\t\t<title> | </title>\t</head>\n" +
                     "\t<body>\n" +
-                    "<h1>Un titre</h1>\n" +
+                    "\t\t <ul>\n" +
+                    "\t\t \t<li><a href=\"index.html\">home</a></li>\n" +
+                    "\t\t </ul>\t\t <h1>Un titre</h1>\n" +
                     "<h2>Un sous-titre</h2>\n" +
                     "<p>Notre projet github <a href=\"https://github.com/gen-classroom/projet-berney_forestier_herzig\">ici</a></p>\n" +
                     "<p>Une autre page de mon site <a href=\"./subdir/subdirfile.html\">ici</a></p>\n" +
@@ -176,7 +178,7 @@ public class BuildTest
                     "</tbody>\n" +
                     "</table>\n" +
                     "<p><del>du texte barré</del></p>\n" +
-                    "<p><ins>du texte soulingé</ins></p>\n" +
+                    "<p><ins>du texte souligné</ins></p>\n" +
                     "<p>Qu'est-ce qui est mieux ?</p>\n" +
                     "<ul>\n" +
                     "<li><input type=\"checkbox\" disabled=\"\"> Ne pas avoir des checkbox</li>\n" +
@@ -191,6 +193,7 @@ public class BuildTest
                     "\t</body>\n" +
                     "</html>";
 
+
             assertEquals(expectedOutput, data.trim());
         }
         catch (IOException e)
@@ -203,7 +206,6 @@ public class BuildTest
     /**
      * Supprimer les fichiers à la fin des tests
      */
-
     @AfterAll
     static void clean()
     {
