@@ -14,7 +14,9 @@ import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 
 import com.github.jknack.handlebars.context.MapValueResolver;
+import com.github.jknack.handlebars.internal.text.StringEscapeUtils;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
+import gen.FileManager;
 import org.apache.commons.io.FilenameUtils;
 
 import picocli.CommandLine;
@@ -60,17 +62,40 @@ public class Build implements Callable<Integer>
     String path;
 
 
+    /**
+     * Dossier root du site
+     */
     private File root;
+
+    /**
+     * Dossier build ou le site est complié
+     */
     private File buildRoot;
 
+    /**
+     * Extensions du parser et builder permettant plus d'options
+     */
     private final LinkedList<Extension> extensions = new LinkedList<>();
+
+    /**
+     *  Parse les fichiers markdown
+     */
     private Parser parser;
+
+    /**
+     * Transforme le résultat du parser en HTML
+     */
     private HtmlRenderer renderer;
 
+    /**
+     * Configuration du site à compiler (clé, valeurs)
+     */
     private Map<String, String> configs;
 
+    /**
+     * Template a utiliser lors de la création des fichiers HTML
+     */
     private Template layout;
-    private FileTemplateLoader loader;
 
 
     /**
@@ -94,37 +119,10 @@ public class Build implements Callable<Integer>
      */
     private void buildFiles()
     {
-        try
-        {
-            buildRoot = new File(root.getPath() + "/build");
-            File tempalteDir = new File(buildRoot + "/template");
 
-            if (buildRoot.exists())
-            {
-                FileUtils.cleanDirectory(buildRoot);
-            }
+        buildRoot = FileManager.createBuildDirectory(root);
 
-            FileUtils.copyDirectory(root, buildRoot, new FileFilter()
-            {
-                @Override
-                public boolean accept(File pathname)
-                {
-                    // Exclue le fichier .git surtout utile pour notre environnement de test.
-                    return !pathname.getName().startsWith(".");
-                }
-            });
-
-            if (tempalteDir.exists())
-            {
-                FileUtils.deleteDirectory(tempalteDir);
-            }
-
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
+        // Ajout des extensions au parser et builder
         extensions.add(AutolinkExtension.create());
         extensions.add(YamlFrontMatterExtension.create());
         extensions.add(TablesExtension.create());
@@ -133,61 +131,20 @@ public class Build implements Callable<Integer>
         extensions.add(InsExtension.create());
         extensions.add(TaskListItemsExtension.create());
 
+
         parser = Parser.builder().extensions(extensions).build();
         renderer = HtmlRenderer.builder().extensions(extensions).escapeHtml(true).build();
 
         // Lecture du fichier de configuration
-        try
-        {
-
-            File config = new File(buildRoot.getPath() + "/config.yaml");
-
-            YamlFrontMatterVisitor visitor = new YamlFrontMatterVisitor();
-
-
-            InputStreamReader in = new InputStreamReader(Files.newInputStream(Path.of(config.getPath())));
-            var doc = parser.parseReader(in);
-            doc.accept(visitor);
-
-            Map<String, List<String>> tmp = visitor.getData();
-
-            configs = new HashMap<>();
-
-            for(Map.Entry mapentry : tmp.entrySet())
-            {
-                configs.put((String)mapentry.getKey(), listToString((List<String>)mapentry.getValue()));
-            }
-
-            in.close();
-            config.delete();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        readGlobalConfiguration();
 
         // Lecture du fichier layout
-        try
-        {
-            loader = new FileTemplateLoader(new File(root.getPath() + "/template/"));
-            loader.setSuffix(".html");
-            Handlebars handlebars = new Handlebars(loader);
-            handlebars.setPrettyPrint(true);
-
-
-            //handlebars.registerHelper("myHelper", new Helper)
-            layout = handlebars.compile("layout");
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        createLayoutTemplate();
 
         for (File f : FileUtils.listFiles(new File(buildRoot.getPath()), null, true))
         {
-            createHTMLFile(f);
+            generateHTMLFile(f);
         }
-
     }
 
     /**
@@ -240,7 +197,7 @@ public class Build implements Callable<Integer>
      *
      * @param file Fichier markdown a transformer
      */
-    private void createHTMLFile(File file)
+    private void generateHTMLFile(File file)
     {
         String basename = FilenameUtils.getBaseName(file.getPath());
         String htmlContent = mdToHtml(file);
@@ -249,20 +206,17 @@ public class Build implements Callable<Integer>
             return;
         }
 
+
         try
         {
             File htmlFile = new File(file.getParentFile() + "/" + basename + ".html");
-            htmlFile.createNewFile();
-            FileWriter writer = new FileWriter(htmlFile);
 
             configs.put("content", htmlContent);
 
             var context = Context.newBuilder(configs).resolver(MapValueResolver.INSTANCE).build();
 
-            layout.apply(context, writer);
+            FileManager.createFile(htmlFile,StringEscapeUtils.unescapeHtml4(layout.apply(context)));
 
-            //writer.write();
-            writer.close();
             file.delete();
 
         }
@@ -273,6 +227,11 @@ public class Build implements Callable<Integer>
 
     }
 
+    /**
+     * Converti une liste de string séparant chaque string par une ","
+     * @param strings Liste de string à séparer par des virgules
+     * @return String contenant la liste séparé par des virgules
+     */
     private String listToString(List<String> strings)
     {
         StringBuilder result = new StringBuilder();
@@ -289,29 +248,56 @@ public class Build implements Callable<Integer>
     }
 
     /**
-     * Génère les meta données à partir d'une map
-     *
-     * @param data Map contenant les clés/valeurs des méta données
-     * @return String contenant toutes les balises <meta>
+     * Lis et stock les informations de la configuration globale du site
      */
-    private String renderMetadata(Map<String, List<String>> data)
+    private void readGlobalConfiguration()
     {
-        StringBuilder metadata = new StringBuilder();
-        for (Map.Entry<String, List<String>> d : data.entrySet())
+        try
         {
-            StringBuilder values = new StringBuilder();
-            for (int i = 0; i < d.getValue().size(); ++i)
+            File config = new File(buildRoot.getPath() + "/config.yaml");
+
+            YamlFrontMatterVisitor visitor = new YamlFrontMatterVisitor();
+
+
+            InputStreamReader in = new InputStreamReader(Files.newInputStream(Path.of(config.getPath())));
+            var doc = parser.parseReader(in);
+            doc.accept(visitor);
+
+            Map<String, List<String>> tmp = visitor.getData();
+
+            configs = new HashMap<>();
+
+            for(Map.Entry mapentry : tmp.entrySet())
             {
-                if (i != 0)
-                {
-                    values.append(", ");
-                }
-
-                values.append(d.getValue().get(i));
+                configs.put((String)mapentry.getKey(), listToString((List<String>)mapentry.getValue()));
             }
-            metadata.append(String.format("<meta name=\"%s\" content=\"%s\">\n", d.getKey(), values));
-        }
 
-        return metadata.toString();
+            in.close();
+            config.delete();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Lis et compile le fichier layout.html afin d'être utilisé comme template pour tous les autres fichiers.
+     */
+    private void createLayoutTemplate()
+    {
+        try
+        {
+            FileTemplateLoader loader = new FileTemplateLoader(new File(root.getPath() + "/template/"));
+            loader.setSuffix(".html");
+            Handlebars handlebars = new Handlebars(loader);
+            handlebars.setPrettyPrint(true);
+
+            layout = handlebars.compile("layout");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
