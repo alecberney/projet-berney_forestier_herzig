@@ -54,7 +54,7 @@ public class StatiqueTest
       String[] args = new String[]{"-version"};
 
       // Exécution
-      String expected = "Statique version: 0.0.1";
+      String expected = "Statique version: 0.0.2";
       cmd.execute(args);
 
       //Vérifie si la commande donne la bonne sortie.
