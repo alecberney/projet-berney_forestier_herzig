@@ -12,35 +12,39 @@ Il met à disposition un générateur de sites statiques.
   
 # Installation et utilisation
 
-### Dezippage de l'archive
+### 1) Télécharger l'archive
+[récupérer l'archive statique.zip](https://github.com/gen-classroom/projet-berney_forestier_herzig/releases)
+
+### 2) Dezippage de l'archive
 **MacOS/Linux:**
 
 ```
-mvn clean install \
-    && unzip -o target/statique.zip
+unzip -o statique.zip
 ```
 
-**Windows:** Utilise git bash ou n'importe quel autre bash basé sur unix. Ou faire un mvn clean install -> supprimer manuellement le vieux dossier "statique" à la racine du projet and dézipper la nouvelle archive *target/statique.zip*.
+**Windows:**
+dézipper l'archive *target/statique.zip* manuellement.
 
-### Ajout au path
- depuis le répertoire du projer
+### 3) Ajouter l'application au path
+ depuis l'intérieur de l'archive dézippée 
+ 
 **MacOS/Linux:**  
 ```
-export PATH=$PATH:`pwd`/statique/bin
+export PATH=$PATH:`pwd`/bin
 ```
 
 **Windows:**
 Dans cmd.exe
 ```  
-SET PATH=%PATH%;%cd%\statique\bin
+SET PATH=%PATH%;%cd%\bin
 ```
 
-### Exécution  
-Sous windows penser à utiliser cmd.exe
+### 4) Exécution  
+> Sous windows penser à utiliser cmd.exe
 
-Executer statique donne le résultat suivant
+Executer <i>$statique</i> donne le résultat suivant
 ```
-statique
+statique [-version] [COMMAND]
 Usage: statique [COMMAND]
 A static site generator.
       -version Print software version
@@ -48,36 +52,76 @@ Commands:
 	new    Initialize a static site directory
 	clean  Clean a static site
 	build  Build a static site
-	serve  Serve a static site
+	serve  Open the site in a web browser
 ```
-La commande serve ne fait pas partie de ce sprint et n'est pas encore implémentée.
-Le fichier config est généré mais n'est pas encore pris en compte car nous n'avons pas cerné son utilité. Il sera implémenté dans une future version.
 
-### metadonnées
+les 4 commandes prennent des chemins de dossier. Si le chemin est manquand, la commande travail dans le répertoire
+courant. 
+
+<b>Scénario</b>
+
+Si vous travaillez dans le répertoire <i>C:\user</i> et que vous souhaitez créer votre site dans le répertoire <i>C:\user\mySite</i>
+>$ statique init /mySite
+
+Pour lancer la création du site site
+>$ statique init /mySite
+Le résultat de la traduction est déployé dans <i>C:\user\mySite\build</i>
+
+Vous voulez retirer le déploiement ?
+>$ statique clean /mySite
+
+La commande recherche un dossier nommé build et le supprime. Ne vous trompez en pointant sur un mauvais dossier
+
+Pour visualiser votre site dans un navigateur.
+>$ statique serve /mySite
+
+#### Configuration
+Dans le fichier config.yaml il est possible de définir le titre de votre site. Ce titre
+apparaîtra dans l'onglet des navigateurs avec le titre de page.
 ```
 ---
-key1: value
-key2:
-  - value 1
-  - value 2
+site_titre: Mysite
+---
+```
+
+#### Créer un page
+Pour créer une page, copier coller le template suivant dans chaque fichier markdown.
+```
+---
+page_titre: your page title here
 ---
 
-document body start here
-```
-sont traduits par:
-```
-<meta name="key1" content="value">
-<meta name="key2" content="value1, value2">
-```
+# this is a title
 
-### contenu
+whith content under it.
+```
+> page_titre est la seule metadonnée des pages.
+
 Le contenu peut être ajouté en suivant la spécification commonmark:
 https://commonmark.org/help/
-Le text sans décoration markdown est inclus dans des balises "paragraphe"
+
+#### Ajouter des liens dans le menu
+Il est possible de créer un menu en éditant le fichier <i>/template/menu.html</i>
+
+Pour chaque nouveau lien que vous souhaitez créer ajouter entre les balises <i>ul</i> présentes:
+```
+<li><a href="chemin/vers_un_fichier_md/depuis_le_dossier_init/index.html">nom du lien</a></li>
+````
+> Le fichier ciblé par le lien est insérer entre dans href="<fichier ici>". Le fichier doit être ciblé depuis 
+> le dossier créer par init et en remplacant l'extension md par html.
+
+![arbre](figures/arbre.png)
+			      	    
+Si vous souhaitez créer un lien vers anotherPage.md, il faut écrire "aFolder/anotherPage.html" dans la balise href.
+
+#### Problèmes connus
+En exécutant la commande build, le message suivant survient. Il n'est pas impactant pour
+le bon fonctionnement de l'application.
+![issue](figures/knownIssue.png)
 
 # GitHub
 ## Langues
-	* Branches -> En anglais  
+    * Branches -> En anglais  
     * Reste -> En français  
 ## Branches
 **Branches d'un sprint:** sprint-x (avec x = 1,2,3,4)    
