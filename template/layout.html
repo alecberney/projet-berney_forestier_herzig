@@ -2,9 +2,9 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>{{ site.titre }} | {{ page.titre }}</title>	</head>
+		<title>{{ site_titre }} | {{ page_titre }}</title>	</head>
 	<body>
-		 {{ include menu.html }}
+		 {{>menu}}
 		 {{ content }}
 	</body>
 </html>
