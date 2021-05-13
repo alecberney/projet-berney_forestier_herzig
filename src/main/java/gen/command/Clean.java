@@ -18,7 +18,7 @@ import java.util.concurrent.Callable;
 
 /**
  * Class implémentant la sous commande clean.
- * @author Berney Alec & Herzig Melvyn
+ * @author Berney Alec, Herzig Melvyn
  */
 @Command(name = "clean", description = "Clean a static site")
 public class Clean implements Callable<Integer>
