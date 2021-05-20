@@ -12,7 +12,7 @@ import gen.command.Serve;
  * Class implémentant la commande principale statique.
  * @author Herzig Melvyn
  */
-public class Main implements
+public class Main
 {
  
    /**
