@@ -1,3 +1,7 @@
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/gen-classroom/projet-berney_forestier_herzig.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/gen-classroom/projet-berney_forestier_herzig/alerts/)
+
+[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/gen-classroom/projet-berney_forestier_herzig.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/gen-classroom/projet-berney_forestier_herzig/context:java)
+
 (nous somme le groupe qui n'a pas pu clonner le repo pour la documentation)
 Vous la trouvez mise à jour dans la branche main "Rapport.docx".
 
