@@ -169,8 +169,7 @@ public class Build implements Callable<Integer>
                 try
                 {
                     InputStreamReader in = new InputStreamReader(Files.newInputStream(Path.of(file.getPath())));
-                    var doc =
-                            parser.parseReader(in);
+                    var doc =  parser.parseReader(in);
                     doc.accept(visitor);
 
                     Map<String, List<String>> tmp = visitor.getData();
