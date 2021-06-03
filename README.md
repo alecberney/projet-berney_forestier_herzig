@@ -192,7 +192,7 @@ Ouvrez Intellj avec le projet, cliquer en suite sur *Run -> Show Code Coverage D
 ![Menu](figures/codeCoverage_Show.png)
 
 Selectionnez ensuite le rapport Jacoco et cliquez sur *Show selected*.
-![Selectionner](figures/codeCoverage_Selected.png)
+![Selectionner](figures/codeCoverage_Select.png)
 
 Vous pouvez maintenant naviguer dans le rapport de test:
-![Rapport](figures/codeCoverage_Report.png)
+![Rapport](figures/codeCoverage_Report.PNG)
