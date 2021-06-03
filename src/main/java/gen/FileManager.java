@@ -214,6 +214,12 @@ public class FileManager
         }
     }
 
+    /**
+     * Permet d'attendre une modification d'un fichier sur une arborescence et de la signaler à un Updatable
+     * @param pathToWatch Racine de l'arborescence à observer
+     * @param updatable Objet à notifer en cas de modification
+     * @throws IOException Problème avec un fichier
+     */
     public static void watch(Path pathToWatch, Updatable updatable) throws IOException
     {
         WatchService watcher = FileSystems.getDefault().newWatchService();
