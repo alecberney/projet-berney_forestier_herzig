@@ -17,6 +17,7 @@ import com.github.jknack.handlebars.context.MapValueResolver;
 import com.github.jknack.handlebars.internal.text.StringEscapeUtils;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import gen.FileManager;
+import gen.Updatable;
 import org.apache.commons.io.FilenameUtils;
 
 import picocli.CommandLine;
@@ -24,16 +25,11 @@ import picocli.CommandLine.Command;
 
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FileUtils;
@@ -58,11 +54,15 @@ import org.commonmark.ext.front.matter.YamlFrontMatterVisitor;
  * @author Berney Alec, Forestier Quentin, Herzig Melvyn
  */
 @Command(name = "build", description = "Build a static site")
-public class Build implements Callable<Integer>
+public class Build implements Callable<Integer>, Updatable
 {
     @CommandLine.Parameters(index = "0", description = "path to build",
             defaultValue = "/")
     String path;
+
+    @CommandLine.Option(names = {"--watch"}, description = "Rebuild the site " +
+            "when a modification is detected")
+    boolean watch = false;
 
 
     /**
@@ -81,7 +81,7 @@ public class Build implements Callable<Integer>
     private final LinkedList<Extension> extensions = new LinkedList<>();
 
     /**
-     *  Parse les fichiers markdown
+     * Parse les fichiers markdown
      */
     private Parser parser;
 
@@ -100,6 +100,10 @@ public class Build implements Callable<Integer>
      */
     private Template layout;
 
+    /**
+     * Boolean permettant de rebuild une seule fois
+     */
+    private boolean newUpdate = true;
 
     /**
      * Méthode pour l'appel de la commande build.
@@ -107,23 +111,9 @@ public class Build implements Callable<Integer>
     @Override
     public Integer call()
     {
-        Path p = Paths.get(path);
 
-        String pathStart = p.isAbsolute() ? "" : ".";
-        root = new File(pathStart + path);
+        root = new File(FileManager.getRealPath(path));
 
-        buildFiles();
-
-        return 0;
-    }
-
-    /**
-     * Créer le dossier build et génère les fichiers HTML
-     */
-    private void buildFiles()
-    {
-
-        buildRoot = FileManager.createBuildDirectory(root);
 
         // Ajout des extensions au parser et builder
         extensions.add(AutolinkExtension.create());
@@ -136,7 +126,33 @@ public class Build implements Callable<Integer>
 
 
         parser = Parser.builder().extensions(extensions).build();
-        renderer = HtmlRenderer.builder().extensions(extensions).escapeHtml(true).build();
+        renderer =
+                HtmlRenderer.builder().extensions(extensions).escapeHtml(true).build();
+
+        buildFiles();
+
+        if (watch)
+        {
+            try
+            {
+                Path p = root.toPath().toAbsolutePath();
+                FileManager.watch(p, this);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * Créer le dossier build et génère les fichiers HTML
+     */
+    private void buildFiles()
+    {
+        buildRoot = FileManager.createBuildDirectory(root);
 
         // Lecture du fichier de configuration
         readGlobalConfiguration();
@@ -144,7 +160,8 @@ public class Build implements Callable<Integer>
         // Lecture du fichier layout
         createLayoutTemplate();
 
-        for (File f : FileUtils.listFiles(new File(buildRoot.getPath()), null, true))
+        for (File f : FileUtils.listFiles(new File(buildRoot.getPath()), null
+                , true))
         {
             generateHTMLFile(f);
         }
@@ -168,16 +185,18 @@ public class Build implements Callable<Integer>
             {
                 try
                 {
-                    InputStreamReader in = new InputStreamReader(Files.newInputStream(Path.of(file.getPath())));
+                    InputStreamReader in =
+                            new InputStreamReader(Files.newInputStream(Path.of(file.getPath())));
                     var doc =
                             parser.parseReader(in);
                     doc.accept(visitor);
 
                     Map<String, List<String>> tmp = visitor.getData();
 
-                    for(Map.Entry mapentry : tmp.entrySet())
+                    for (Map.Entry mapentry : tmp.entrySet())
                     {
-                        configs.put((String)mapentry.getKey(), listToString((List<String>)mapentry.getValue()));
+                        configs.put((String) mapentry.getKey(),
+                                listToString((List<String>) mapentry.getValue()));
                     }
 
                     in.close();
@@ -212,13 +231,16 @@ public class Build implements Callable<Integer>
 
         try
         {
-            File htmlFile = new File(file.getParentFile() + "/" + basename + ".html");
+            File htmlFile = new File(file.getParentFile() + "/" + basename +
+                    ".html");
 
             configs.put("content", htmlContent);
 
-            var context = Context.newBuilder(configs).resolver(MapValueResolver.INSTANCE).build();
+            var context =
+                    Context.newBuilder(configs).resolver(MapValueResolver.INSTANCE).build();
 
-            FileManager.createFile(htmlFile,StringEscapeUtils.unescapeHtml4(layout.apply(context)));
+            FileManager.createFile(htmlFile,
+                    StringEscapeUtils.unescapeHtml4(layout.apply(context)));
 
             file.delete();
 
@@ -232,6 +254,7 @@ public class Build implements Callable<Integer>
 
     /**
      * Converti une liste de string séparant chaque string par une ","
+     *
      * @param strings Liste de string à séparer par des virgules
      * @return String contenant la liste séparé par des virgules
      */
@@ -239,9 +262,9 @@ public class Build implements Callable<Integer>
     {
         StringBuilder result = new StringBuilder();
         boolean first = true;
-        for(String s : strings)
+        for (String s : strings)
         {
-            if(first)
+            if (first)
                 first = false;
             else
                 result.append(", ");
@@ -262,7 +285,8 @@ public class Build implements Callable<Integer>
             YamlFrontMatterVisitor visitor = new YamlFrontMatterVisitor();
 
 
-            InputStreamReader in = new InputStreamReader(Files.newInputStream(Path.of(config.getPath())));
+            InputStreamReader in =
+                    new InputStreamReader(Files.newInputStream(Path.of(config.getPath())));
             var doc = parser.parseReader(in);
             doc.accept(visitor);
 
@@ -270,9 +294,10 @@ public class Build implements Callable<Integer>
 
             configs = new HashMap<>();
 
-            for(Map.Entry mapentry : tmp.entrySet())
+            for (Map.Entry mapentry : tmp.entrySet())
             {
-                configs.put((String)mapentry.getKey(), listToString((List<String>)mapentry.getValue()));
+                configs.put((String) mapentry.getKey(),
+                        listToString((List<String>) mapentry.getValue()));
             }
 
             in.close();
@@ -285,13 +310,16 @@ public class Build implements Callable<Integer>
     }
 
     /**
-     * Lis et compile le fichier layout.html afin d'être utilisé comme template pour tous les autres fichiers.
+     * Lis et compile le fichier layout.html afin d'être utilisé comme
+     * template pour tous les autres fichiers.
      */
     private void createLayoutTemplate()
     {
         try
         {
-            FileTemplateLoader loader = new FileTemplateLoader(new File(root.getPath() + "/template/"));
+            FileTemplateLoader loader =
+                    new FileTemplateLoader(new File(root.getPath() +
+                            "/template/"));
             loader.setSuffix(".html");
             Handlebars handlebars = new Handlebars(loader);
             handlebars.setPrettyPrint(true);
@@ -302,5 +330,23 @@ public class Build implements Callable<Integer>
         {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void update(File fileUpdated)
+    {
+
+
+        if (newUpdate && !fileUpdated.getAbsolutePath().contains(buildRoot.getAbsolutePath()))
+        {
+            buildFiles();
+            newUpdate = false;
+        }
+    }
+
+    @Override
+    public void beginNewUpdate()
+    {
+        newUpdate = true;
     }
 }
