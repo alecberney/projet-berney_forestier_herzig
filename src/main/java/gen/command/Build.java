@@ -173,6 +173,7 @@ public class Build implements Callable<Integer>, Updatable
      * @param file Fichier markdown a transformer
      * @return String contenu html
      */
+    @SuppressWarnings("unchecked")
     private String mdToHtml(File file)
     {
 
@@ -195,6 +196,7 @@ public class Build implements Callable<Integer>, Updatable
 
                     for (Map.Entry mapentry : tmp.entrySet())
                     {
+
                         configs.put((String) mapentry.getKey(),
                                 listToString((List<String>) mapentry.getValue()));
                     }
@@ -276,6 +278,7 @@ public class Build implements Callable<Integer>, Updatable
     /**
      * Lis et stock les informations de la configuration globale du site
      */
+    @SuppressWarnings("unchecked")
     private void readGlobalConfiguration()
     {
         try
