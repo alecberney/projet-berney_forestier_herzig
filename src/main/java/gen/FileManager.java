@@ -220,6 +220,7 @@ public class FileManager
      * @param updatable Objet à notifer en cas de modification
      * @throws IOException Problème avec un fichier
      */
+    @SuppressWarnings("unchecked")
     public static void watch(Path pathToWatch, Updatable updatable) throws IOException
     {
         WatchService watcher = FileSystems.getDefault().newWatchService();
