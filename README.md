@@ -189,10 +189,13 @@ Tout d'abord, exécuter les test avec la commande:
 mvn clean install
 ```
 Ouvrez Intellj avec le projet, cliquer en suite sur *Run -> Show Code Coverage Data*.
+	
 ![Menu](figures/codeCoverage_Show.png)
 
 Selectionnez ensuite le rapport Jacoco et cliquez sur *Show selected*.
+	
 ![Selectionner](figures/codeCoverage_Select.png)
 
 Vous pouvez maintenant naviguer dans le rapport de test:
+	
 ![Rapport](figures/codeCoverage_Report.PNG)
