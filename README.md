@@ -59,7 +59,7 @@ Commands:
 	serve  Open the site in a web browser
 ```
 
-les 4 commandes prennent des chemins de dossier. Si le chemin est manquand, la commande travail dans le répertoire
+les 4 commandes prennent des chemins de dossier. Si le chemin est manquant, la commande travail dans le répertoire
 courant. 
 
 <b>Scénario</b>
@@ -67,14 +67,14 @@ courant.
 Si vous travaillez dans le répertoire <i>C:\user</i> et que vous souhaitez créer votre site dans le répertoire <i>C:\user\mySite</i>
 >$ statique init /mySite
 
-Pour lancer la création du site site
->$ statique init /mySite
+Pour lancer la création du site
+>$ statique build /mySite
 Le résultat de la traduction est déployé dans <i>C:\user\mySite\build</i>
 
 Vous voulez retirer le déploiement ?
 >$ statique clean /mySite
 
-La commande recherche un dossier nommé build et le supprime. Ne vous trompez en pointant sur un mauvais dossier
+La commande recherche un dossier nommé build et le supprime. Ne vous trompez pas en pointant sur un mauvais dossier
 
 Pour visualiser votre site dans un navigateur.
 >$ statique serve /mySite
@@ -183,6 +183,23 @@ Les classes et les méthodes sont commentées au format Javadoc.
 Tous les noms seront en camel case sauf pour les constantes où les espaces seront des ‘_’ et en majuscules.  
 **Classe :** Première lettre en majuscule, MaClasse.java  
 **Fonction :** Première lettre en minuscule, maFonction()  
-**Ma constante :** final int UNE_CONSTANTE.  
+**Ma constante :** final int UNE_CONSTANTE.
 
-  
+# Code coverage avec Jacoco
+Le but de cette partie est d'explique comment récupérer / consulter le rapport de test de code coverage générer par Jacoco.
+Tout d'abord, exécuter les test avec la commande: 
+
+```
+mvn clean install
+```
+Ouvrez Intellj avec le projet, cliquer en suite sur *Run -> Show Code Coverage Data*.
+	
+![Menu](figures/codeCoverage_Show.png)
+
+Selectionnez ensuite le rapport Jacoco et cliquez sur *Show selected*.
+	
+![Selectionner](figures/codeCoverage_Select.png)
+
+Vous pouvez maintenant naviguer dans le rapport de test:
+	
+![Rapport](figures/codeCoverage_Report.PNG)

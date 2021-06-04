@@ -1,6 +1,7 @@
 # Target
 target/*
 !target/statique.zip
+!target/statiqueJavadoc.zip
 
 # statique
 statique/*
