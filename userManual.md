@@ -96,7 +96,7 @@ Pour créer une page, copier coller le template suivant dans chaque fichier mark
 page_titre: titre de la page
 ---
 
-# Cet un titre
+# C'est un titre
 
 C'est du contenu!
 ```
@@ -179,7 +179,8 @@ Pour visualiser votre site dans un navigateur.
 >$ statique serve /mySite
 
 Vous voulez que les modifications s'appliquent et s'affichent directement sur le navigateur?
->$ statique build --watch /mySite 
+>$ statique build --watch /mySite
+	
 >$ statique serve --watch /mySite
 
 Si vous voulez quitter le mode *watch*, utiliser le raccourci:
