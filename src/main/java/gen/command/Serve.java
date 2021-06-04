@@ -53,13 +53,16 @@ public class Serve implements Callable<Integer>, Updatable
 
         openIndexInBrower();
 
-        try
+        if (watch)
         {
-            FileManager.watch(new File(realPath + "/build").toPath(), this);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
+            try
+            {
+                FileManager.watch(new File(realPath + "/build").toPath(), this);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         return 0;
