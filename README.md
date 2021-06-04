@@ -179,6 +179,23 @@ Les classes et les méthodes sont commentées au format Javadoc.
 Tous les noms seront en camel case sauf pour les constantes où les espaces seront des ‘_’ et en majuscules.  
 **Classe :** Première lettre en majuscule, MaClasse.java  
 **Fonction :** Première lettre en minuscule, maFonction()  
-**Ma constante :** final int UNE_CONSTANTE.  
+**Ma constante :** final int UNE_CONSTANTE.
 
-  
+# Code coverage avec Jacoco
+Le but de cette partie est d'explique comment récupérer / consulter le rapport de test de code coverage générer par Jacoco.
+Tout d'abord, exécuter les test avec la commande: 
+
+```
+mvn clean install
+```
+Ouvrez Intellj avec le projet, cliquer en suite sur *Run -> Show Code Coverage Data*.
+	
+![Menu](figures/codeCoverage_Show.png)
+
+Selectionnez ensuite le rapport Jacoco et cliquez sur *Show selected*.
+	
+![Selectionner](figures/codeCoverage_Select.png)
+
+Vous pouvez maintenant naviguer dans le rapport de test:
+	
+![Rapport](figures/codeCoverage_Report.PNG)
