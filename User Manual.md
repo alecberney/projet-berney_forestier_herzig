@@ -38,16 +38,15 @@ SET PATH=%PATH%;%cd%\bin
 #### Commandes
 
 Executer <i>$statique</i> seul vous donnera la liste des commandes et donc le résultat suivant
-```
-statique [-version] [COMMAND]
-Usage: statique [COMMAND]
-A static site generator.
-      -version Print software version
+```	
+Usage: statique [-version] [COMMAND]
+A brand new static site generator.
+      -version   Print software version
 Commands:
-	init   Initialize a static site directory
-	clean  Clean a static site
-	build  Build a static site
-	serve  Open the site in a web browser
+  init   Initialize a static site directory
+  clean  Clean a static site
+  build  Build a static site
+  serve  Open the site in a web browser.
 ```
 
 les 4 commandes prennent des chemins de dossier. Si le chemin est manquant, la commande travail dans le répertoire
@@ -62,7 +61,7 @@ Voici à quoi sevent chacune de ces commandes:
 #### Arguments pour les commandes
 
 Des arguments peuvent être utilisés sur certaines commandes, voici comment les ajouter:
->$ statique build --watch
+>$ statique --[argument] build /cheminSite
 
 Voici les arguments qui peuvent être passés à certaines commandes:
 * watch : Permet de régénérer le site statique à la volée lorsque un changement sur le système de fichiers opère
@@ -97,9 +96,9 @@ Pour créer une page, copier coller le template suivant dans chaque fichier mark
 page_titre: titre de la page
 ---
 
-# this is a title
+# Cet un titre
 
-whith content under it.
+C'est du contenu!
 ```
 Voici un exemple contenant beaucoup de possibilités de contenu pour le fichier index.md:
 ```
@@ -142,7 +141,7 @@ La même image en plus petite
 
 > page_titre est la seule metadonnée des pages.
 
-Le contenu peut être ajouté en suivant la spécification commonmark:
+Plus de contenu peut être ajouté en suivant la spécification commonmark:
 https://commonmark.org/help/
 
 #### Ajouter des liens dans le menu
@@ -180,5 +179,9 @@ Pour visualiser votre site dans un navigateur.
 >$ statique serve /mySite
 
 Vous voulez que les modifications s'appliquent et s'affichent directement sur le navigateur?
->$ statique build /mySite --watch
->$ statique serve /mySite --watch
+>$ statique build --watch /mySite 
+>$ statique serve --watch /mySite
+
+Si vous voulez quitter le mode *watch*, utiliser le raccourci:
+>$ Ctrl + c
+>$Terminer le programme de commandes (O/N) ? O
