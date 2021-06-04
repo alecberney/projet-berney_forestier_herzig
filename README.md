@@ -59,7 +59,7 @@ Commands:
 	serve  Open the site in a web browser
 ```
 
-les 4 commandes prennent des chemins de dossier. Si le chemin est manquand, la commande travail dans le répertoire
+les 4 commandes prennent des chemins de dossier. Si le chemin est manquant, la commande travail dans le répertoire
 courant. 
 
 <b>Scénario</b>
@@ -67,14 +67,14 @@ courant.
 Si vous travaillez dans le répertoire <i>C:\user</i> et que vous souhaitez créer votre site dans le répertoire <i>C:\user\mySite</i>
 >$ statique init /mySite
 
-Pour lancer la création du site site
->$ statique init /mySite
+Pour lancer la création du site
+>$ statique build /mySite
 Le résultat de la traduction est déployé dans <i>C:\user\mySite\build</i>
 
 Vous voulez retirer le déploiement ?
 >$ statique clean /mySite
 
-La commande recherche un dossier nommé build et le supprime. Ne vous trompez en pointant sur un mauvais dossier
+La commande recherche un dossier nommé build et le supprime. Ne vous trompez pas en pointant sur un mauvais dossier
 
 Pour visualiser votre site dans un navigateur.
 >$ statique serve /mySite
