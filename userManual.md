@@ -16,7 +16,9 @@ unzip -o statique.zip
 dézipper l'archive *target/statique.zip* manuellement.
 
 ### 3) Ajouter l'application au path
- depuis l'intérieur de l'archive dézippée 
+ depuis l'intérieur de l'archive dézippée
+ 
+Il est nécessaire de réaliser cette action à chaque fois que vous vous voulez utiliser l'application dans un nouveau terminal.
  
 **MacOS/Linux:**  
 ```
