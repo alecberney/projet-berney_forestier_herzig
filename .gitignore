@@ -2,6 +2,7 @@
 target/*
 !target/statique.zip
 !target/statiqueJavadoc.zip
+!target/apidocs
 
 # statique
 statique/*
